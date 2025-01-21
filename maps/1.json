@@ -1,0 +1,58 @@
+{
+    "ZONES": [
+        {
+            "nom": "Ville",
+            "coordonnees": [
+                [2.0, 48.0],
+                [2.5, 48.5],
+                [2.8, 48.2],
+                [2.6, 48.0],
+                [2.3, 47.9],
+                [2.0, 48.0]
+            ],
+            "style": {
+                "fillColor": "#28a745",
+                "color": "#000000", 
+                "weight": 2,
+                "fillOpacity": 0.5,
+                "zIndex": 0
+            },
+            "description": "Zone de la ville"
+        },
+        {
+            "nom": "Zone teste",
+            "coordonnees": [
+                [2.4, 48.1],
+                [2.5, 48.2],
+                [2.6, 48.15],
+                [2.5, 48.05],
+                [2.4, 48.1]
+            ],
+            "style": {
+                "fillColor": "#FF0000",
+                "color": "#000000",
+                "weight": 2,
+                "fillOpacity": 0.5,
+                "zIndex": 1
+            },
+            "description": "Zone de test"
+        }
+    ],
+    "DELIVERY_POINTS": [
+        {
+            "nom": "Entrepot 1",
+            "coordonnees": [48.2, 2.4],
+            "description": "Point de livraison principal avec accès poids lourds"
+        },
+        {
+            "nom": "Entrepot 2",
+            "coordonnees": [48.15, 2.5],
+            "description": "Entrepôt secondaire pour stockage temporaire"
+        },
+        {
+            "nom": "Entrepot 3",
+            "coordonnees": [48.1, 2.45],
+            "description": "Centre de distribution régional"
+        }
+    ]
+}
