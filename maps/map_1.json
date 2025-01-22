@@ -53,6 +53,11 @@
             "nom": "Entrepot 3",
             "coordonnees": [48.1, 2.45],
             "description": "Centre de distribution régional"
+        },
+        {
+            "nom": "Start",
+            "coordonnees": [48.2, 2.3],
+            "description": "Point de départ de la tournée"
         }
     ]
 }

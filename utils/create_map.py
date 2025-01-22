@@ -4,25 +4,14 @@ import geopandas as gpd
 from shapely.geometry import Polygon
 import folium
 import json
-
-def load_map_data(path):
-    try:
-        with open(path, 'r') as f:
-            data = json.load(f)
-            return data
-    except FileNotFoundError:
-        st.error("Fichier de configuration non trouvé")
-        return None
-    except json.JSONDecodeError:
-        st.error("Erreur dans le format du fichier JSON")
-        return None
+from utils.tools import load_json_data
 
 def create_map():
     current_round = st.session_state.round
 
     # Récupérer les points de livraison et zones
-    path = f"maps/{current_round}.json"
-    data = load_map_data(path)
+    path = f"maps/map_{current_round}.json"
+    data = load_json_data(path)
 
     ZONES = data['ZONES']
     DELIVERY_POINTS = data['DELIVERY_POINTS']

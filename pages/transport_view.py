@@ -1,11 +1,16 @@
 import streamlit as st
+from utils.tools import load_json_data
+import pandas as pd
 
 def transport_view():
-    st.title("Transport View")
-    st.write("Welcome to the Transport View page!")
+    st.title("🚗 Vehicules List")
+    
+    vehicules_data = load_json_data("ressources/vehicules.json")["Vehicules"]
 
-    # Add your transport view content here
-    st.write("Here you can manage and view transport-related information.")
+    df = pd.DataFrame(vehicules_data)
+
+    st.dataframe(df, use_container_width=True)
+
 
 if __name__ == "__main__":
     transport_view()
