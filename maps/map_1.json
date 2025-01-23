@@ -4,7 +4,7 @@
             "nom": "Ville",
             "coordonnees": [
                 [2.0, 48.0],
-                [2.5, 48.5],
+                [2.5, 48.5], 
                 [2.8, 48.2],
                 [2.6, 48.0],
                 [2.3, 47.9],
@@ -12,7 +12,7 @@
             ],
             "style": {
                 "fillColor": "#28a745",
-                "color": "#000000", 
+                "color": "#000000",
                 "weight": 2,
                 "fillOpacity": 0.5,
                 "zIndex": 0
@@ -20,44 +20,72 @@
             "description": "Zone de la ville"
         },
         {
-            "nom": "Zone teste",
+            "nom": "Zone industrielle",
             "coordonnees": [
-                [2.4, 48.1],
-                [2.5, 48.2],
-                [2.6, 48.15],
-                [2.5, 48.05],
-                [2.4, 48.1]
+                [2.35, 48.15],
+                [2.45, 48.25],
+                [2.55, 48.2],
+                [2.5, 48.1],
+                [2.35, 48.15]
             ],
             "style": {
                 "fillColor": "#FF0000",
+                "color": "#000000", 
+                "weight": 2,
+                "fillOpacity": 0.5,
+                "zIndex": 1
+            },
+            "description": "Zone industrielle avec entrepôts"
+        },
+        {
+            "nom": "Zone commerciale",
+            "coordonnees": [
+                [2.6, 48.15],
+                [2.7, 48.2],
+                [2.75, 48.15],
+                [2.65, 48.1],
+                [2.6, 48.15]
+            ],
+            "style": {
+                "fillColor": "#FFA500",
                 "color": "#000000",
                 "weight": 2,
                 "fillOpacity": 0.5,
                 "zIndex": 1
             },
-            "description": "Zone de test"
+            "description": "Zone commerciale"
         }
     ],
     "DELIVERY_POINTS": [
         {
             "nom": "Entrepot 1",
+            "type": "warehouse",
             "coordonnees": [48.2, 2.4],
             "description": "Point de livraison principal avec accès poids lourds"
         },
         {
             "nom": "Entrepot 2",
+            "type": "warehouse", 
             "coordonnees": [48.15, 2.5],
             "description": "Entrepôt secondaire pour stockage temporaire"
         },
         {
-            "nom": "Entrepot 3",
+            "nom": "Point Client 1",
+            "type": "delivery",
             "coordonnees": [48.1, 2.45],
-            "description": "Centre de distribution régional"
+            "description": "Point de livraison client"
+        },
+        {
+            "nom": "Point Client 2", 
+            "type": "delivery",
+            "coordonnees": [48.13, 2.65],
+            "description": "Point de livraison client zone commerciale"
         },
         {
             "nom": "Start",
-            "coordonnees": [48.2, 2.3],
+            "type": "warehouse",
+            "coordonnees": [48.2, 2.38],
             "description": "Point de départ de la tournée"
         }
     ]
-}
+ }

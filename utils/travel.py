@@ -5,6 +5,7 @@ from shapely.geometry import Polygon, LineString
 from shapely.ops import transform, unary_union
 from functools import partial
 
+# Renvois la distance parcourue dans chaque zone par la ligne entre coord_start et coord_end
 def distance_by_zones_exclusive(map_data, coord_start, coord_end):
     # On construit la line (trajet) en shapely (lon, lat)
     # Shapely attend (x, y) = (lon, lat). il faut faire attention.
@@ -22,7 +23,7 @@ def distance_by_zones_exclusive(map_data, coord_start, coord_end):
 
     projected_line = transform(projection, line)
 
-    # --- 3) Extraire les ZONES et préparer une liste (zone_name, zIndex, geom) --- #
+    # On extraire les ZONES et prépare une liste (zone_name, zIndex, geom) pour un traitement plus simple
     raw_zones = map_data.get("ZONES", [])
     
     zones_processed = []

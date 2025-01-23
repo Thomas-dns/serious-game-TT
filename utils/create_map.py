@@ -67,10 +67,23 @@ def create_map():
 
     # Ajouter les points de livraison 
     for delivery_point in DELIVERY_POINTS:
-        folium.Marker(
-            delivery_point['coordonnees'],
-            popup=delivery_point['nom'],
-            icon=folium.Icon(color='red', icon='info-sign')
-        ).add_to(m)
+        if delivery_point['nom'] == "Start":
+            folium.Marker(
+                delivery_point['coordonnees'],
+                popup=delivery_point['nom'],
+                icon=folium.Icon(color='green', icon='info-sign')
+            ).add_to(m)
+        elif delivery_point['type'] == "warehouse":
+            folium.Marker(
+                delivery_point['coordonnees'],
+                popup=delivery_point['nom'],
+                icon=folium.Icon(color='lightgreen', icon='info-sign')
+            ).add_to(m)
+        elif delivery_point['type'] == "delivery":
+            folium.Marker(
+                delivery_point['coordonnees'],
+                popup=delivery_point['nom'],
+                icon=folium.Icon(color='ligthred', icon='flag')
+            ).add_to(m)
 
     return m, descriptions

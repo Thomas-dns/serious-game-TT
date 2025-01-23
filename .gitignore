@@ -36,3 +36,7 @@ coverage/
 # Temporary files
 *.tmp
 *.temp
+
+#scripts
+collected_scripts.txt
+structure.py

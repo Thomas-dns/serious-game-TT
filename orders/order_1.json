@@ -9,11 +9,7 @@
                 "poids_kg": 2500,
                 "description": "Palettes de marchandises diverses"
             },
-            "delivery_time": {
-                "days": 2,
-                "creation_date": "2025-01-21",
-                "limit_date": "2025-01-23"
-            }
+            "delivery_time": 1.5
         },
         {
             "id": "BC002",
@@ -24,11 +20,7 @@
                 "poids_kg": 800,
                 "description": "Petit colis"
             },
-            "delivery_time": {
-                "days": 1,
-                "creation_date": "2025-01-21",
-                "limit_date": "2025-01-22"
-            }
+            "delivery_time": 2
         },
         {
             "id": "BC003",
@@ -39,11 +31,7 @@
                 "poids_kg": 1500,
                 "description": "Colis de taille moyenne"
             },
-            "delivery_time": {
-                "days": 1,
-                "creation_date": "2025-01-21",
-                "limit_date": "2025-01-22"
-            }
+            "delivery_time": 1.7
         },
         {
             "id": "BC004",
@@ -54,11 +42,7 @@
                 "poids_kg": 3000,
                 "description": "Colis volumineux"
             },
-            "delivery_time": {
-                "days": 2,
-                "creation_date": "2025-01-21",
-                "limit_date": "2025-01-23"
-            }
+            "delivery_time": 2.1
         }
     ]
 }
