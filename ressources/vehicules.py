@@ -23,16 +23,21 @@ class Vehicle:
 
         self.is_used = False
 
+        self.content = {}
+
+    # Renvois le cout par kilomètre
     def travel_cost_km(self, load):
         # Calcul du coefficient de charge (entre 0 et 1)
         coef = load  /  self.charge_max_emport_kg 
         # Interpolation linéaire entre cout_vide et cout_charge
-        cout =  (self.cout_utilisation_km_charge - self.cout_utilisation_km_vide) * coef
+        cout =  (self.cout_utilisation_km_charge - self.cout_utilisation_km_vide) * coef + self.cout_utilisation_km_vide
         return cout 
     
-    def travel_impact_km(self, load):
+    # Renvois le score d'impacte par kilomètre
+    def travel_emission_km(self, load):
         coef = load  /  self.charge_max_emport_kg 
-        cout =  (self.impact_km_charge_co2 - self.impact_km_vide_co2) * coef
+        cout =  (self.impact_km_charge_co2 - self.impact_km_vide_co2) * coef + self.impact_km_vide_co2
+
         return cout
     
     

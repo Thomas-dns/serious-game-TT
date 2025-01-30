@@ -1,5 +1,5 @@
 import streamlit as st
-from utils.create_map import create_map
+from utils.map_logic import create_map
 
 def map_view():
     st.title("Map View")

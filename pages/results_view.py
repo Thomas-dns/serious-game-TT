@@ -8,7 +8,7 @@ def results_view():
     st.title("🌍 Résultats distances par zones (exclusives)")
 
     current_round = st.session_state.round
-    path = f"maps/map_{current_round}.json"
+    path = f"ressources/maps/map_{current_round}.json"
     data = load_json_data(path)
 
     # Récupérer la liste des points de livraison

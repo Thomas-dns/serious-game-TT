@@ -7,7 +7,7 @@ def orders_view():
     
     current_round = st.session_state.round
 
-    order_data = load_json_data(f"orders/order_{current_round}.json")["ORDERS"]
+    order_data = load_json_data(f"ressources/orders/order_{current_round}.json")["ORDERS"]
 
     df = pd.DataFrame(order_data)
 

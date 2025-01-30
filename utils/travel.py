@@ -4,11 +4,25 @@ import pyproj
 from shapely.geometry import Polygon, LineString
 from shapely.ops import transform, unary_union
 from functools import partial
+import streamlit as st
+from utils.tools import load_json_data
 
 # Renvois la distance parcourue dans chaque zone par la ligne entre coord_start et coord_end
-def distance_by_zones_exclusive(map_data, coord_start, coord_end):
+def distance_by_zones_exclusive(start, end):
     # On construit la line (trajet) en shapely (lon, lat)
     # Shapely attend (x, y) = (lon, lat). il faut faire attention.
+    current_round = st.session_state.round
+    path = f"ressources/maps/map_{current_round}.json"
+    data = load_json_data(path)
+
+    delivery_points = data["DELIVERY_POINTS"]
+
+    start_point = next((p for p in delivery_points if p["nom"] == start), None)
+    coord_start = start_point["coordonnees"] 
+
+    end_point = next((p for p in delivery_points if p["nom"] == end), None)
+    coord_end = end_point["coordonnees"] 
+
     start_lon, start_lat = coord_start[1], coord_start[0]
     end_lon, end_lat     = coord_end[1],   coord_end[0]
 
@@ -24,7 +38,7 @@ def distance_by_zones_exclusive(map_data, coord_start, coord_end):
     projected_line = transform(projection, line)
 
     # On extraire les ZONES et prépare une liste (zone_name, zIndex, geom) pour un traitement plus simple
-    raw_zones = map_data.get("ZONES", [])
+    raw_zones = data.get("ZONES", [])
     
     zones_processed = []
     for z in raw_zones:

@@ -10,7 +10,7 @@ def create_map():
     current_round = st.session_state.round
 
     # Récupérer les points de livraison et zones
-    path = f"maps/map_{current_round}.json"
+    path = f"ressources/maps/map_{current_round}.json"
     data = load_json_data(path)
 
     ZONES = data['ZONES']

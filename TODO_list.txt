@@ -1,8 +1,0 @@
-Mieux définir les zones : Ajouter une vmax, le crit air, la taille max des véhicule ( si possible en fonction de l'heure )
-
-Ajouter le cout de la main d'oeuvre pour les moyens de transport 
-
-Ajouter 
-
-Determiner la longeur d'un round pour la simulation : Jours, semaines, mois ? Surement jour pour pouvoir limiter
-le nombre de commande a gerer tous en gardant des risque de retard .
