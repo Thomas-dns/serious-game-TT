@@ -11,7 +11,8 @@
             "crit_air": 2,
             "cout_utilisation_km_charge": 0.54,
             "cout_utilisation_km_vide": 0.41,
-            "cout_fixe_utilisation_journalier": 204.00
+            "cout_fixe_utilisation_journalier": 204.00,
+            "storage_point": "Start"
         },
         {
             "nom": "VL_elec",
@@ -24,7 +25,8 @@
             "crit_air": 0,
             "cout_utilisation_km_charge": 0.07,
             "cout_utilisation_km_vide": 0.05,
-            "cout_fixe_utilisation_journalier": 93.00
+            "cout_fixe_utilisation_journalier": 93.00,
+            "storage_point": "Start"
         }
     ],
     "orders": [

@@ -1,0 +1,6 @@
+Simulation :
+    - initialisé le temps (debut de journée)
+    - gérer la pile des trajet (une par véhicule ou une pour tous les véhicule)
+        * meilleur gestion des stocks si solution 2
+        * besoin de mettre un suivit des quantité et des positions des véhicule
+    - 

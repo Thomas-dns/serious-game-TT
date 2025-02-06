@@ -11,15 +11,16 @@ def map_view():
     # Section des Zones
     st.markdown("<h1 style='text-align: center;'>Déscription des Points de livraison et des Zones</h1>", unsafe_allow_html=True)
     st.header("📍 Zones")
-    for zone_name, zone_desc in descriptions["ZONES"]:
-        with st.expander(f"Zone : {zone_name}"):
-            st.write(zone_desc)
+
+    for zone in st.session_state.zones:
+        with st.expander(f"Zone : {zone.nom}"):
+            st.write(zone.description)
     
     # Section des Points de livraison
     st.header("🚚 Points de livraison")
-    for point_name, point_desc in descriptions["DELIVERY_POINTS"]:
-        with st.expander(f"Point : {point_name}"):
-            st.write(point_desc)
+    for point in st.session_state.warehouses_info:
+        with st.expander(f"Entrepôt : {point.nom}"):
+            st.write(point.description)
 
 if __name__ == "__main__":
     map_view()

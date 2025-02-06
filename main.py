@@ -10,24 +10,54 @@ def init_session_state():
     if 'round' not in st.session_state:
         st.session_state.round = 1
 
+from utils.map_logic import Zone, Warehouse
+
 def init_session_state_round(round):
-    
     st.session_state.fleet = []
     st.session_state.orders = []
-    st.session_state.Orders = Order
-    # On initialise les vehicules
+    
+    # Charger les données de configuration, carte et commandes
     data = load_json_data(f"ressources/config/config_{round}.json")
-    map = load_json_data(f"ressources/maps/map_{round}.json")
+    map_data = load_json_data(f"ressources/maps/map_{round}.json")
     orders = load_json_data(f"ressources/orders/order_{round}.json")
-
-    st.session_state.warehouses = []
-    for point in map["DELIVERY_POINTS"]:
-        st.session_state.warehouses.append(point["nom"])
-
+    
+    # Stocker la carte complète
+    st.session_state.map_data = map_data
+    
+    # Créer des objets Zone à partir de la clé "ZONES"
+    zones_raw = map_data.get("ZONES", [])
+    st.session_state.zones = [
+        Zone(
+            nom=z["nom"],
+            coordonnees=z["coordonnees"],
+            style=z.get("style", {}),
+            description=z.get("description", ""),
+            parameters=z.get("parameters", {})
+        )
+        for z in zones_raw
+    ]
+    
+    # Créer des objets Warehouse à partir des points de livraison de type "warehouse"
+    delivery_points = map_data.get("DELIVERY_POINTS", [])
+    st.session_state.warehouses_info = [
+        Warehouse(
+            nom=p["nom"],
+            coordonnees=p["coordonnees"],
+            type_point=p["type"],
+            description=p.get("description", "")
+        )
+        for p in delivery_points if (p.get("type") == "warehouse" or p.get("type") == "delivery")
+    ]
+    
+    # Conserver la liste des noms d'entrepôts pour la gestion des commandes
+    st.session_state.warehouse_names = [w.nom for w in st.session_state.warehouses_info]
+    
+    # Initialiser la flotte
     for vehicule in data["fleet"]:
         st.session_state.fleet.append(Vehicle(**vehicule))
     
-    st.session_state.Orders = Orders(f"ressources/orders/order_{round}.json", st.session_state.warehouses)
+    # Instancier Orders en lui passant la liste des noms d'entrepôts
+    st.session_state.Orders = Orders(f"ressources/orders/order_{round}.json", st.session_state.warehouse_names)
 
 
 def main():
@@ -54,6 +84,9 @@ def main():
 
     # Afficher le round actuel
     st.write(f"Round actuel : {st.session_state.round}")
+
+    st.write(st.session_state.warehouses_info)
+    st.write(st.session_state.zones)
 
 
 if __name__ == "__main__":

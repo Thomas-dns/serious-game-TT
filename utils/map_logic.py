@@ -6,6 +6,29 @@ import folium
 import json
 from utils.tools import load_json_data
 
+# utils/domain.py (ou utils/models.py)
+class Zone:
+    def __init__(self, nom, coordonnees, style, description, parameters):
+        self.nom = nom
+        self.coordonnees = coordonnees  # liste de coordonnées
+        self.style = style              # dictionnaire de style (fillColor, weight, etc.)
+        self.parameters = parameters    # dictionnaire de paramètres (vitesse_maximale, critair_min, etc.)
+        self.description = description
+        
+    def __repr__(self):
+        return f"Zone({self.nom}, parameters={self.parameters})"
+
+class Warehouse:
+    def __init__(self, nom, coordonnees, type_point, description):
+        self.nom = nom
+        self.coordonnees = coordonnees
+        self.type = type_point  # "warehouse", "delivery", "start", etc.
+        self.description = description
+
+    def __repr__(self):
+        return f"Warehouse({self.nom}, type={self.type})"
+
+
 def create_map():
     current_round = st.session_state.round
 

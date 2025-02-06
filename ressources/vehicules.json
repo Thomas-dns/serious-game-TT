@@ -1,82 +1,88 @@
 {
-    "Vehicules": [
-      {
-        "nom": "SPL",
-        "charge_max_emport_kg": 32000,
-        "volume_max_emport_m3": 90,
-        "autonomie_charge_km": 1424,
-        "vitesse_max": 90,
-        "impact_km_charge_co2": 0.84,
-        "impact_km_vide_co2": 0.64,
-        "crit_air": 2,
-        "cout_utilisation_km_charge": 0.54,
-        "cout_utilisation_km_vide": 0.41,
-        "cout_fixe_utilisation_journalier": 204.00
-      },
-      {
-        "nom": "SPL2",
-        "charge_max_emport_kg": 12000,
-        "volume_max_emport_m3": 90,
-        "autonomie_charge_km": 1500,
-        "vitesse_max": 90,
-        "impact_km_charge_co2": 1.02,
-        "impact_km_vide_co2": 0.81,
-        "crit_air": 4,
-        "cout_utilisation_km_charge": 0.66,
-        "cout_utilisation_km_vide": 0.53,
-        "cout_fixe_utilisation_journalier": 102.00
-      },
-      {
-        "nom": "PL",
-        "charge_max_emport_kg": 9600,
-        "volume_max_emport_m3": 30,
-        "autonomie_charge_km": 1200,
-        "vitesse_max": 90,
-        "impact_km_charge_co2": 0.64,
-        "impact_km_vide_co2": 0.46,
-        "crit_air": 3,
-        "cout_utilisation_km_charge": 0.41,
-        "cout_utilisation_km_vide": 0.30,
-        "cout_fixe_utilisation_journalier": 154.00
-      },
-      {
-        "nom": "VL_diesel",
-        "charge_max_emport_kg": 2800,
-        "volume_max_emport_m3": 17,
-        "autonomie_charge_km": 500,
-        "vitesse_max": 130,
-        "impact_km_charge_co2": 0.38,
-        "impact_km_vide_co2": 0.30,
-        "crit_air": 3,
-        "cout_utilisation_km_charge": 0.25,
-        "cout_utilisation_km_vide": 0.20,
-        "cout_fixe_utilisation_journalier": 73.00
-      },
-      {
-        "nom": "VL_elec",
-        "charge_max_emport_kg": 2800,
-        "volume_max_emport_m3": 17,
-        "autonomie_charge_km": 129,
-        "vitesse_max": 110,
-        "impact_km_charge_co2": 0,
-        "impact_km_vide_co2": 0,
-        "crit_air": 0,
-        "cout_utilisation_km_charge": 0.07,
-        "cout_utilisation_km_vide": 0.05,
-        "cout_fixe_utilisation_journalier": 93.00
-      },
-      {
-        "nom": "VUL",
-        "charge_max_emport_kg": 138,
-        "volume_max_emport_m3": 0.68,
-        "autonomie_charge_km": 60,
-        "vitesse_max": 25,
-        "impact_km_charge_co2": 0,
-        "impact_km_vide_co2": 0,
-        "crit_air": 0,
-        "cout_utilisation_km_charge": 0.02,
-        "cout_utilisation_km_vide": 0.02,
-        "cout_fixe_utilisation_journalier": 30.20
-      }
-    ]
+  "Vehicules": [
+    {
+      "nom": "SPL",
+      "charge_max_emport_kg": 32000,
+      "volume_max_emport_m3": 90,
+      "autonomie_charge_km": 1424,
+      "vitesse_max": 90,
+      "impact_km_charge_co2": 0.84,
+      "impact_km_vide_co2": 0.64,
+      "crit_air": 2,
+      "cout_utilisation_km_charge": 0.54,
+      "cout_utilisation_km_vide": 0.41,
+      "cout_fixe_utilisation_journalier": 204.00,
+      "storage_point": "Start"
+    },
+    {
+      "nom": "SPL2",
+      "charge_max_emport_kg": 12000,
+      "volume_max_emport_m3": 90,
+      "autonomie_charge_km": 1500,
+      "vitesse_max": 90,
+      "impact_km_charge_co2": 1.02,
+      "impact_km_vide_co2": 0.81,
+      "crit_air": 4,
+      "cout_utilisation_km_charge": 0.66,
+      "cout_utilisation_km_vide": 0.53,
+      "cout_fixe_utilisation_journalier": 102.00,
+      "storage_point": "Start"
+    },
+    {
+      "nom": "PL",
+      "charge_max_emport_kg": 9600,
+      "volume_max_emport_m3": 30,
+      "autonomie_charge_km": 1200,
+      "vitesse_max": 90,
+      "impact_km_charge_co2": 0.64,
+      "impact_km_vide_co2": 0.46,
+      "crit_air": 3,
+      "cout_utilisation_km_charge": 0.41,
+      "cout_utilisation_km_vide": 0.30,
+      "cout_fixe_utilisation_journalier": 154.00,
+      "storage_point": "Start"
+    },
+    {
+      "nom": "VL_diesel",
+      "charge_max_emport_kg": 2800,
+      "volume_max_emport_m3": 17,
+      "autonomie_charge_km": 500,
+      "vitesse_max": 130,
+      "impact_km_charge_co2": 0.38,
+      "impact_km_vide_co2": 0.30,
+      "crit_air": 3,
+      "cout_utilisation_km_charge": 0.25,
+      "cout_utilisation_km_vide": 0.20,
+      "cout_fixe_utilisation_journalier": 73.00,
+      "storage_point": "Start"
+    },
+    {
+      "nom": "VL_elec",
+      "charge_max_emport_kg": 2800,
+      "volume_max_emport_m3": 17,
+      "autonomie_charge_km": 129,
+      "vitesse_max": 110,
+      "impact_km_charge_co2": 0,
+      "impact_km_vide_co2": 0,
+      "crit_air": 0,
+      "cout_utilisation_km_charge": 0.07,
+      "cout_utilisation_km_vide": 0.05,
+      "cout_fixe_utilisation_journalier": 93.00,
+      "storage_point": "Start"
+    },
+    {
+      "nom": "VUL",
+      "charge_max_emport_kg": 138,
+      "volume_max_emport_m3": 0.68,
+      "autonomie_charge_km": 60,
+      "vitesse_max": 25,
+      "impact_km_charge_co2": 0,
+      "impact_km_vide_co2": 0,
+      "crit_air": 0,
+      "cout_utilisation_km_charge": 0.02,
+      "cout_utilisation_km_vide": 0.02,
+      "cout_fixe_utilisation_journalier": 30.20,
+      "storage_point": "Start"
+    }
+  ]
 }

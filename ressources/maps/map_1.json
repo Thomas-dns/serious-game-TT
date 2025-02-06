@@ -17,7 +17,11 @@
                 "fillOpacity": 0.5,
                 "zIndex": 0
             },
-            "description": "Zone de la ville"
+            "description": "Zone de la ville",
+            "parameters": {
+                "vitesse_maximale": 50, 
+                "critair_min": 2       
+            }
         },
         {
             "nom": "Zone industrielle",
@@ -35,7 +39,11 @@
                 "fillOpacity": 0.5,
                 "zIndex": 1
             },
-            "description": "Zone industrielle avec entrepôts"
+            "description": "Zone industrielle avec entrepôts",
+            "parameters": {
+                "vitesse_maximale": 70, 
+                "critair_min": 3        
+            }
         },
         {
             "nom": "Zone commerciale",
@@ -53,7 +61,11 @@
                 "fillOpacity": 0.5,
                 "zIndex": 1
             },
-            "description": "Zone commerciale"
+            "description": "Zone commerciale",
+            "parameters": {
+                "vitesse_maximale": 30,
+                "critair_min": 1        
+            }
         }
     ],
     "DELIVERY_POINTS": [
@@ -88,4 +100,4 @@
             "description": "Point de départ de la tournée"
         }
     ]
- }
+}

@@ -2,7 +2,8 @@ class Vehicle:
     def __init__(self, nom, charge_max_emport_kg, volume_max_emport_m3, 
                  autonomie_charge_km, vitesse_max, impact_km_charge_co2,
                  impact_km_vide_co2, crit_air, cout_utilisation_km_charge,
-                 cout_utilisation_km_vide, cout_fixe_utilisation_journalier):
+                 cout_utilisation_km_vide, cout_fixe_utilisation_journalier,
+                 storage_point):
         
         self.nom = nom
 
@@ -22,7 +23,8 @@ class Vehicle:
         self.cout_fixe_utilisation_journalier = cout_fixe_utilisation_journalier
 
         self.is_used = False
-
+        self.storage_point = storage_point
+        
         self.content = {}
 
     # Renvois le cout par kilomètre
