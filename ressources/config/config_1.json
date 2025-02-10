@@ -40,28 +40,6 @@
                 "description": "Palettes de marchandises diverses"
             },
             "delivery_time": 1.5
-        },
-        {
-            "id": "BC002",
-            "start": "Start",
-            "end": "Entrepot 2",
-            "content": {
-                "volume_m3": 5.5,
-                "poids_kg": 800,
-                "description": "Petit colis"
-            },
-            "delivery_time": 2
-        },
-        {
-            "id": "BC004",
-            "start": "Start",
-            "end": "Entrepot 1",
-            "content": {
-                "volume_m3": 20.5,
-                "poids_kg": 3000,
-                "description": "Colis volumineux"
-            },
-            "delivery_time": 2.1
         }
     ]
 }

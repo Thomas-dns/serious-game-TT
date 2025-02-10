@@ -21,28 +21,6 @@
                 "description": "Petit colis"
             },
             "delivery_time": 2
-        },
-        {
-            "id": "BC003",
-            "start": "Start",
-            "end": "Entrepot 3",
-            "content": {
-                "volume_m3": 10.5,
-                "poids_kg": 1500,
-                "description": "Colis de taille moyenne"
-            },
-            "delivery_time": 1.7
-        },
-        {
-            "id": "BC004",
-            "start": "Start",
-            "end": "Entrepot 1",
-            "content": {
-                "volume_m3": 20.5,
-                "poids_kg": 3000,
-                "description": "Colis volumineux"
-            },
-            "delivery_time": 2.1
         }
     ]
 }

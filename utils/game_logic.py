@@ -108,10 +108,12 @@ class Route:
         self.steps = []  # liste d'objets Step
         self.impact = None
         self.departure_time = departure_time
+        self.segment_impacts = []
 
     def add_step(self, step: Step):
         self.steps.append(step)
 
+    # On peut soit calculer par segment soit par trajet ( les segment on a une duplication pour le premier ...)
     def calculate_impact(self, fleet):
         """
         Calcule l'impact (coût, émission et distance) du trajet en parcourant les étapes.
@@ -130,9 +132,13 @@ class Route:
                 load = step.final_load['total_poids']
                 next_warehouse = self.steps[i+1].entrepot
                 distances = distance_by_zones_exclusive(warehouse, next_warehouse)
+                segment_cost = 0
+                segment_emission = 0
+                segment_distance = 0
+                segment_time = 0
+
                 for zone_name, distance in distances.items():
                     zone = next((z for z in st.session_state.zones if z.nom == zone_name), None)
-    
                     if zone is not None:
                         vitesse_limite = zone.parameters.get("vitesse_maximale", None)
                     else:
@@ -140,71 +146,243 @@ class Route:
 
                     vitesse = min(v_max, vitesse_limite) if vitesse_limite is not None else v_max
 
-                    cost += vehicule.travel_cost_km(load) * distance / 1000
-                    emission += vehicule.travel_emission_km(load) * distance / 1000
-                    total_d += distance / 1000
-                    temps += distance / 1000 / vitesse
+                    segment_cost += vehicule.travel_cost_km(load) * distance / 1000
+                    segment_emission += vehicule.travel_emission_km(load) * distance / 1000
+                    segment_distance += distance / 1000
+                    segment_time += distance / 1000 / vitesse
+
+                self.segment_impacts.append(
+                            f"{warehouse} -> {next_warehouse} ({segment_distance:.1f} Km): {segment_cost:.1f}€ | {segment_emission:.1f}"
+                        )
+
+
+                cost += segment_cost
+                emission += segment_emission
+                total_d += segment_distance
+                temps += segment_time
+
         self.impact = f"Cout : {cost:.1f} € | Emission : {emission:.1f} | D : {total_d:.1f} Km | temps {temps:.2f}: h"
         return self.impact
-
+    def get_segment_impacts(self):
+        return self.segment_impacts
+    
 
 ##############################################
 # Logic for game simulation
 ##############################################
-
-from utils.tools import load_json_data
-from utils.map_logic import Zone, Warehouse
-from ressources.vehicules import Vehicle
-from ressources.orders.orders import Orders
+import datetime
 
 class Simulation:
-    def __init__(self):
-        if 'round' not in st.session_state:
-            st.session_state.round = 1
+    def __init__(self, time_step_seconds=60):
+        self.time_step = datetime.timedelta(seconds=time_step_seconds)
+        self.start_time = datetime.datetime.combine(datetime.date.today(), datetime.time(8, 0, 0))
+        # Par exemple, une simulation sur 8 heures
+        self.end_time = self.start_time + datetime.timedelta(hours=8)
+        self.events = []  # liste des événements de simulation
 
-    def init_session_state_round(round):
-        st.session_state.fleet = []
-        st.session_state.orders = []
-        
-        # Charger les données de configuration, carte et commandes
-        data = load_json_data(f"ressources/config/config_{round}.json")
-        map_data = load_json_data(f"ressources/maps/map_{round}.json")
+        self.simulation_orders = st.session_state.Orders.copy()
 
-        # Stocker la carte complète
-        st.session_state.map_data = map_data
+        # Initialiser l'état de chaque véhicule
+        self.vehicle_states = {}
+        for v in st.session_state.fleet:
+            self.vehicle_states[v.nom] = {
+                "available": True,
+                "current_route": None,    # route en cours
+                "current_step": 0,        # indice de l'étape dans la route
+                "time_remaining": datetime.timedelta(0),
+                "current_load": 0,
+                "travel_cost": 0,
+                "travel_emission": 0
+            }
         
-        # Créer des objets Zone à partir de la clé "ZONES"
-        zones_raw = map_data.get("ZONES", [])
-        st.session_state.zones = [
-            Zone(
-                nom=z["nom"],
-                coordonnees=z["coordonnees"],
-                style=z.get("style", {}),
-                description=z.get("description", ""),
-                parameters=z.get("parameters", {})
-            )
-            for z in zones_raw
-        ]
-        
-        # Créer des objets Warehouse à partir des points de livraison de type "warehouse"
-        delivery_points = map_data.get("DELIVERY_POINTS", [])
-        st.session_state.warehouses_info = [
-            Warehouse(
-                nom=p["nom"],
-                coordonnees=p["coordonnees"],
-                type_point=p["type"],
-                description=p.get("description", "")
-            )
-            for p in delivery_points if p.get("type") == "warehouse"
-        ]
-        
-        # Conserver la liste des noms d'entrepôts pour la gestion des commandes
-        st.session_state.warehouse_names = [w.nom for w in st.session_state.warehouses_info]
-        
-        # Initialiser la flotte
-        for vehicule in data["fleet"]:
-            st.session_state.fleet.append(Vehicle(**vehicule))
-        
-        # Instancier Orders en lui passant la liste des noms d'entrepôts
-        st.session_state.Orders = Orders(f"ressources/orders/order_{round}.json", st.session_state.warehouse_names)
+        # Regrouper les routes par véhicule (si plusieurs routes sont planifiées pour le même véhicule)
+        self.routes_by_vehicle = {}
+        for v in st.session_state.fleet:
+            self.routes_by_vehicle[v.nom] = []
+        for route in st.session_state.routes:
+            self.routes_by_vehicle[route.transport].append(route)
+        # Trier par heure de départ pour chaque véhicule
+        for veh in self.routes_by_vehicle:
+            self.routes_by_vehicle[veh].sort(key=lambda r: r.departure_time)
 
+    def compute_segment_time(self, vehicle, start, end, load):
+        """
+        Calcule le temps de parcours entre deux points (start et end, qui sont les noms des entrepôts)
+        en fonction des distances par zone et des limitations de vitesse.
+        """
+        from utils.travel import distance_by_zones_exclusive
+        # Récupérer le dictionnaire {zone: distance_en_mètres}
+        distances = distance_by_zones_exclusive(start, end)
+        total_hours = 0.0
+        total_cost = 0.0
+        total_emission = 0.0
+        for zone_name, distance in distances.items():
+            # Récupérer la zone dans st.session_state
+            zone_obj = next((z for z in st.session_state.zones if z.nom == zone_name), None)
+            if zone_obj is not None:
+                zone_speed = zone_obj.parameters.get("vitesse_maximale", None)
+            else:
+                zone_speed = None
+            # La vitesse effective est le minimum entre la vitesse du véhicule et la vitesse limite de la zone (si définie)
+            if zone_speed is not None:
+                speed = min(vehicle.vitesse_max, zone_speed)
+            else:
+                speed = vehicle.vitesse_max
+            # Convertir la distance en kilomètres et calculer le temps (en heures)
+            segment_time_hours = (distance / 1000) / speed
+            total_hours += segment_time_hours
+            # On calcul les couts
+            total_cost += vehicle.travel_cost_km(load) * distance / 1000
+            total_emission += vehicle.travel_emission_km(load) * distance / 1000
+
+        return datetime.timedelta(hours=total_hours), total_cost, total_emission
+
+    def is_stock_available(self, warehouse, step):
+        """
+        Vérifie si le stock requis pour les opérations de chargement dans l'étape est disponible
+        dans l'état simulation_orders (état original des commandes).
+        """
+        for op in step.operations:
+            if op.type == "Charger":
+                available = self.simulation_orders.warehouses_content(warehouse).get(op.produit, 0)
+                if available < op.quantite:
+                    return False
+        return True
+
+    def run_simulation_with_time_step(self):
+        simulation_clock = self.start_time
+
+        while simulation_clock <= self.end_time:
+            # Affichage périodique de l'horloge de simulation
+            if simulation_clock.minute % 15 == 0:
+                print(f"clock : {simulation_clock}")
+
+            for veh_nom, state in self.vehicle_states.items():
+                if state["available"]:
+                    # Vérifier si une route doit démarrer
+                    if self.routes_by_vehicle[veh_nom]:
+                        next_route = self.routes_by_vehicle[veh_nom][0]
+                        # Convertir l'heure de départ en datetime
+                        route_departure = datetime.datetime.combine(simulation_clock.date(), next_route.departure_time)
+                        if simulation_clock >= route_departure:
+                            # Démarrer la route
+                            state["current_route"] = self.routes_by_vehicle[veh_nom].pop(0)
+                            state["current_step"] = 0
+                            if state["current_route"].steps:
+                                next_step = state["current_route"].steps[0].entrepot
+                                vehicle_obj = next(v for v in st.session_state.fleet if v.nom == veh_nom)
+                                start_warehouse = vehicle_obj.storage_point
+                                state["time_remaining"], state["travel_cost"], state["travel_emission"] = self.compute_segment_time(
+                                    vehicle=vehicle_obj,
+                                    start=start_warehouse,
+                                    end=next_step,
+                                    load=state["current_load"]
+                                )
+                                state["available"] = False
+                                self.events.append({
+                                    "time": simulation_clock,
+                                    "vehicle": veh_nom,
+                                    "event": f"Démarrage de la route vers {next_step}"
+                                })
+                else:
+                    # Le véhicule est en cours d'exécution d'une route, décrémenter le temps restant
+                    state["time_remaining"] -= self.time_step
+                    if state["time_remaining"] <= datetime.timedelta(0):
+                        current_route = state["current_route"]
+                        current_step_index = state["current_step"]
+                        current_step = current_route.steps[current_step_index]
+                        arrived_warehouse = current_step.entrepot
+
+                        # Enregistrer l'arrivée à l'entrepôt
+                        self.events.append({
+                            "time": simulation_clock,
+                            "vehicle": veh_nom,
+                            "event": f"Arrivée à {arrived_warehouse}"
+                        })
+                        state["current_step"] += 1
+
+                        # Pour les opérations de chargement, vérifier la disponibilité dans simulation_orders
+                        if any(op.type == "Charger" for op in current_step.operations):
+                            if not self.is_stock_available(arrived_warehouse, current_step):
+                                # Le stock n'est pas suffisant : le véhicule attend
+                                self.events.append({
+                                    "time": simulation_clock,
+                                    "vehicle": veh_nom,
+                                    "event": f"Attente de chargement à {arrived_warehouse}"
+                                })
+                                # On prolonge le temps d'attente avant de revérifier (par exemple, 5 minutes)
+                                state["time_remaining"] = datetime.timedelta(minutes=5)
+                                continue
+
+                        # SIMULER L'EXÉCUTION DES OPÉRATIONS SUR L'ÉTAT DES COMMANDES ORIGINALES
+                        for op in current_step.operations:
+                            if op.type == "Charger":
+                                self.simulation_orders.update_warehouse_content(arrived_warehouse, op.produit, -op.quantite)
+                                self.events.append({
+                                    "time": simulation_clock,
+                                    "vehicle": veh_nom,
+                                    "event": f"Chargement de {op.quantite} de {op.produit} à {arrived_warehouse}"
+                                })
+                                state["current_load"] += op.quantite * self.simulation_orders.orders[op.produit].content['poids_kg']
+
+                            elif op.type == "Décharger":
+                                self.simulation_orders.update_warehouse_content(arrived_warehouse, op.produit, op.quantite)
+                                self.events.append({
+                                    "time": simulation_clock,
+                                    "vehicle": veh_nom,
+                                    "event": f"Déchargement de {op.quantite} de {op.produit} à {arrived_warehouse}"
+                                })
+                                state["current_load"] -= op.quantite * self.simulation_orders.orders[op.produit].content['poids_kg']
+
+
+                        # S'il reste d'autres étapes, calculer le temps pour le prochain segment
+                        if state["current_step"] < len(current_route.steps):
+                            start_warehouse = arrived_warehouse
+                            next_warehouse = current_route.steps[state["current_step"]].entrepot
+                            vehicle_obj = next(v for v in st.session_state.fleet if v.nom == veh_nom)
+                            state["time_remaining"], state["travel_cost"], state["travel_emission"]  = self.compute_segment_time(
+                                vehicle=vehicle_obj,
+                                start=start_warehouse,
+                                end=next_warehouse,
+                                load=state["current_load"]
+                            )
+                            self.events.append({
+                                "time": simulation_clock,
+                                "vehicle": veh_nom,
+                                "event": f"Départ de {start_warehouse} vers {next_warehouse}"
+                            })
+                        else:
+                            # Fin de la route : le véhicule redevient disponible
+                            state["available"] = True
+                            state["current_route"] = None
+                            self.events.append({
+                                "time": simulation_clock,
+                                "vehicle": veh_nom,
+                                "event": "Fin de route"
+                            })
+            # Incrémenter l'horloge de simulation
+            simulation_clock += self.time_step
+
+        # Trier et retourner les événements une fois la simulation terminée
+        self.events.sort(key=lambda e: e["time"])
+        return self.events
+    
+    def generate_route_reports(self):
+        reports = []
+        for route in st.session_state.routes:
+            report = {
+                "Vehicle": route.transport,
+                "Departure Time": route.departure_time,
+                "Segments": route.get_segment_impacts()
+            }
+            reports.append(report)
+        return reports
+
+
+    def display_simulation(self):
+        # Affichage des événements (par exemple via un DataFrame)
+        import pandas as pd
+        df = pd.DataFrame(self.events)
+        df['time'] = df['time'].apply(lambda t: t.strftime("%H:%M:%S"))
+        st.dataframe(df)
+    

@@ -7,7 +7,7 @@
 # Import des librairies
 import streamlit as st
 import pandas as pd
-
+import datetime
 # Import des classes
 from utils.travel import distance_by_zones_exclusive
 from ressources.vehicules import Vehicle
@@ -155,7 +155,7 @@ def main():
         transport = st.selectbox("Transport", options=transports, index=1, key="transport_select",
                                    placeholder="Sélectionnez un transport disponible")
     with col2:
-            departure_time = st.time_input("Heure de départ", key="departure_time", step=600, value=None)
+            departure_time = st.time_input("Heure de départ", key="departure_time", step=600, value=datetime.time(8, 45))
         
     if transport and departure_time:
         st.session_state.vehicule = next(v for v in st.session_state.fleet if v.nom == transport)
@@ -268,6 +268,8 @@ def main():
                 st.warning("Veuillez ajouter au moins une étape au trajet.")
 
     display_routes()
+
+    st.write(st.session_state.routes)
 
 
 if __name__ == "__main__":
