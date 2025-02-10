@@ -1,5 +1,6 @@
 from utils.tools import load_json_data
 import copy
+import datetime
 
 class Order:
     def __init__(self, id, start, end, content, delivery_time, warehouse):
@@ -8,7 +9,15 @@ class Order:
         self.end = end
         self.content = content  # dict with volume_m3, poids_kg, description
         # A terme on peut juste creer des object product (plein d'object = une commande)
-        self.delivery_time = delivery_time
+        if isinstance(delivery_time, str):
+            self.delivery_time = datetime.datetime.strptime(delivery_time, "%Y-%m-%dT%H:%M:%S")
+            print("eeeeeeeee")
+            print(type(self.delivery_time))
+        else:
+            self.delivery_time = delivery_time
+            print("ddddddd")
+        
+        print(f"RRRRRRRRR {type(self.delivery_time)}")
 
         self.warehouse = warehouse # dict avec les entrepots logistique en keys
                 

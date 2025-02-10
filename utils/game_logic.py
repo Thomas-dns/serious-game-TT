@@ -171,6 +171,8 @@ class Route:
 # Logic for game simulation
 ##############################################
 import datetime
+import re
+
 
 class Simulation:
     def __init__(self, time_step_seconds=60):
@@ -192,7 +194,8 @@ class Simulation:
                 "time_remaining": datetime.timedelta(0),
                 "current_load": 0,
                 "travel_cost": 0,
-                "travel_emission": 0
+                "travel_emission": 0,
+                "distance": 0
             }
         
         # Regrouper les routes par véhicule (si plusieurs routes sont planifiées pour le même véhicule)
@@ -216,6 +219,7 @@ class Simulation:
         total_hours = 0.0
         total_cost = 0.0
         total_emission = 0.0
+        total_distance = 0.0
         for zone_name, distance in distances.items():
             # Récupérer la zone dans st.session_state
             zone_obj = next((z for z in st.session_state.zones if z.nom == zone_name), None)
@@ -234,8 +238,9 @@ class Simulation:
             # On calcul les couts
             total_cost += vehicle.travel_cost_km(load) * distance / 1000
             total_emission += vehicle.travel_emission_km(load) * distance / 1000
+            total_distance += distance / 1000
 
-        return datetime.timedelta(hours=total_hours), total_cost, total_emission
+        return datetime.timedelta(hours=total_hours), total_cost, total_emission, total_distance
 
     def is_stock_available(self, warehouse, step):
         """
@@ -272,12 +277,16 @@ class Simulation:
                                 next_step = state["current_route"].steps[0].entrepot
                                 vehicle_obj = next(v for v in st.session_state.fleet if v.nom == veh_nom)
                                 start_warehouse = vehicle_obj.storage_point
-                                state["time_remaining"], state["travel_cost"], state["travel_emission"] = self.compute_segment_time(
+                                state["time_remaining"],cost ,emission ,distance = self.compute_segment_time(
                                     vehicle=vehicle_obj,
                                     start=start_warehouse,
                                     end=next_step,
                                     load=state["current_load"]
                                 )
+                                state["travel_cost"] += cost 
+                                state["travel_emission"] += emission
+                                state["distance"] += distance
+
                                 state["available"] = False
                                 self.events.append({
                                     "time": simulation_clock,
@@ -340,12 +349,17 @@ class Simulation:
                             start_warehouse = arrived_warehouse
                             next_warehouse = current_route.steps[state["current_step"]].entrepot
                             vehicle_obj = next(v for v in st.session_state.fleet if v.nom == veh_nom)
-                            state["time_remaining"], state["travel_cost"], state["travel_emission"]  = self.compute_segment_time(
+                            state["time_remaining"], cost, emission, distance  = self.compute_segment_time(
                                 vehicle=vehicle_obj,
                                 start=start_warehouse,
                                 end=next_warehouse,
                                 load=state["current_load"]
                             )
+
+                            state["travel_cost"] += cost 
+                            state["travel_emission"] += emission
+                            state["distance"] += distance
+
                             self.events.append({
                                 "time": simulation_clock,
                                 "vehicle": veh_nom,
@@ -377,6 +391,40 @@ class Simulation:
             }
             reports.append(report)
         return reports
+
+    # Fonction pour verifier si les commandes arrivent a destination (on regarde si elles sont arrivé au point de livraison)
+    def check_deliveries(self):
+        delivery_status = {}
+        for order_id, order in st.session_state.Orders.orders.items():
+            end_warehouse = order.end
+            required_delivery_time = order.delivery_time
+            print(f"TTTTTT {type(required_delivery_time)}")
+            # delivered = any(
+            #     event["event"].startswith(f"Déchargement de {order_id}") and event["event"].endswith(f"à {end_warehouse}")
+            #     for event in self.events
+            # )
+            delivered = False
+            quantity_delivered = 0
+            pattern = re.compile(rf"Déchargement de ([\d.]+) de {order_id} à {end_warehouse}")
+
+            for event in self.events:
+                match = pattern.search(event["event"])
+                
+                if match:
+                    delivered = True
+                    quantity_delivered += float(match.group(1))
+                    actual_delivery_time = event["time"] # On garde l'heure de la derniere livraison au point de livraison
+
+            if delivered and quantity_delivered >= 0.99:
+                print(f"TYPEEEEEE : {type(actual_delivery_time)}/{actual_delivery_time} | {type(required_delivery_time)}/{required_delivery_time}  ")
+                if actual_delivery_time <= required_delivery_time:
+                    delivery_status[order_id] = "on_time"
+                else: 
+                    delivery_status[order_id] = "late"
+            else:
+                delivery_status[order_id] = "not_delivered"
+
+        return delivery_status
 
 
     def display_simulation(self):
