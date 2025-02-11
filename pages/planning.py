@@ -87,52 +87,104 @@ def display_routes():
                 df = pd.DataFrame(table_data)
                 st.table(df)
 
-def display_commands():
-    orders = st.session_state.Orders_copy.orders  # dictionnaire des Order
+def display_warehouse_status():
+    """Affiche l'état des stocks dans les entrepôts"""
+    orders = st.session_state.Orders_copy.orders
     data = st.session_state.Orders_copy.get_warehouse_orders()
-    content_copy = st.session_state.content_copy
-
+    
     commandes = sorted(orders.keys())
-    entrepots = list(data.keys()) + ['Véhicule']
-
+    entrepots = list(data.keys())
+    
     df = pd.DataFrame(index=commandes + ['Poids/volume'], columns=entrepots)
     poids_totals = {e: 0.0 for e in entrepots}
     volume_totals = {e: 0.0 for e in entrepots}
-
+    
     for entrepot in data:
         for cmd_id, proportion in data[entrepot]:
             order = orders[cmd_id]
             df.at[cmd_id, entrepot] = proportion
             poids_totals[entrepot] += order.content['poids_kg'] * proportion
             volume_totals[entrepot] += order.content['volume_m3'] * proportion
-
-    for cmd_id, proportion in content_copy.items():
-        if proportion > 0:
-            order = orders[cmd_id]
-            df.at[cmd_id, 'Véhicule'] = proportion
-            poids_totals['Véhicule'] += order.content['poids_kg'] * proportion
-            volume_totals['Véhicule'] += order.content['volume_m3'] * proportion
-
+    
     for entrepot in entrepots:
         df.at['Poids/volume', entrepot] = (
             f"{poids_totals[entrepot]:.2f} kg\n"
             f"{volume_totals[entrepot]:.2f} m³"
         )
-
+    
     def row_style(row):
         styles = []
         for _ in row:
             if row.name == 'Poids/volume':
-                styles.append('background-color: #FFB6C1; font-weight: bold;')
+                styles.append('background-color: #E3F2FD; font-weight: bold;')
             else:
                 styles.append('')
         return styles
-
+    
     styled_df = df.fillna(0).style.apply(row_style, axis=1)
     styled_df = styled_df.set_properties(**{'white-space': 'pre-wrap'})
-    st.write("Tableau de répartition des commandes :")
-    st.dataframe(styled_df)
+    
+    with st.expander("📦 État des stocks dans les entrepôts", expanded=True):
+        st.dataframe(styled_df, use_container_width=True)
 
+def display_vehicle_status():
+    """Affiche l'état du chargement du véhicule"""
+    orders = st.session_state.Orders_copy.orders
+    content_copy = st.session_state.content_copy
+    vehicule = st.session_state.vehicule
+    
+    # Calcul des totaux
+    total_poids = 0.0
+    total_volume = 0.0
+    
+    # Création du DataFrame
+    df = pd.DataFrame(index=sorted(orders.keys()) + ['Poids/volume'], columns=['Véhicule'])
+    
+    # Remplissage du DataFrame
+    for cmd_id, proportion in content_copy.items():
+        if proportion > 0:
+            order = orders[cmd_id]
+            df.at[cmd_id, 'Véhicule'] = proportion
+            total_poids += order.content['poids_kg'] * proportion
+            total_volume += order.content['volume_m3'] * proportion
+    
+    # Ajout ligne totaux
+    df.at['Poids/volume', 'Véhicule'] = (
+        f"{total_poids:.2f} kg\n"
+        f"{total_volume:.2f} m³"
+    )
+    
+    # Style
+    def row_style(row):
+        styles = []
+        for _ in row:
+            if row.name == 'Poids/volume':
+                styles.append('background-color: #E3F2FD; font-weight: bold;')
+            else:
+                styles.append('')
+        return styles
+    
+    styled_df = df.fillna(0).style.apply(row_style, axis=1)
+    styled_df = styled_df.set_properties(**{'white-space': 'pre-wrap'})
+    
+    with st.expander("🚛 État du chargement du véhicule", expanded=True):
+        # Barres de progression
+        col1, col2 = st.columns(2)
+        with col1:
+            poids_percent = (total_poids / vehicule.charge_max_emport_kg) * 100
+            st.progress(min(poids_percent / 100, 1.0), text=f"Poids: {poids_percent:.1f}%")
+        with col2:
+            volume_percent = (total_volume / vehicule.volume_max_emport_m3) * 100
+            st.progress(min(volume_percent / 100, 1.0), text=f"Volume: {volume_percent:.1f}%")
+        
+        # Tableau
+        st.dataframe(styled_df, use_container_width=True)
+
+def display_commands():
+    """Fonction principale qui appelle les deux affichages"""
+    display_warehouse_status()
+    display_vehicle_status()
+    
 ##############################################
 # Fonction principale (interface Streamlit)
 ##############################################

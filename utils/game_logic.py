@@ -398,7 +398,6 @@ class Simulation:
         for order_id, order in st.session_state.Orders.orders.items():
             end_warehouse = order.end
             required_delivery_time = order.delivery_time
-            print(f"TTTTTT {type(required_delivery_time)}")
             # delivered = any(
             #     event["event"].startswith(f"Déchargement de {order_id}") and event["event"].endswith(f"à {end_warehouse}")
             #     for event in self.events
@@ -416,7 +415,6 @@ class Simulation:
                     actual_delivery_time = event["time"] # On garde l'heure de la derniere livraison au point de livraison
 
             if delivered and quantity_delivered >= 0.99:
-                print(f"TYPEEEEEE : {type(actual_delivery_time)}/{actual_delivery_time} | {type(required_delivery_time)}/{required_delivery_time}  ")
                 if actual_delivery_time <= required_delivery_time:
                     delivery_status[order_id] = "on_time"
                 else: 
