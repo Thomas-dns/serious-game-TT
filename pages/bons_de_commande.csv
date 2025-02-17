@@ -1,0 +1,7 @@
+Numero Date "Numero Bon de commande" Client Produit Quantite Prix_Unitaire Montant_Total
+1 2025-02-01 1 "Entreprise A" X 10 15 150
+2 2025-02-02 2 "Entreprise B" Y 5 20 100
+3 2025-02-03 3 "Entreprise C" Z 8 12,5 100
+4 2025-02-01 1 "Entreprise A" Y 10 20 200
+5 2025-02-01 1 "Entreprise A" Z 10 12 120
+6 2025-02-01 1 "Entreprise A" W 10 16 160

@@ -17,13 +17,20 @@ clients_data = [
     {"ClientID": 10003, "Nom": "Particulier Dupont", "Adresse": "78 Boulevard Privé"},
 ]
 
-# Catalogue des produits avec caractéristiques détaillées
+# Nouveau catalogue des produits avec caractéristiques détaillées
 catalogue = {
-    "Ordinateur portable": {"Prix": 800, "Conditionnement": "Carton", "Volume": 0.03, "Poids": 2.5, "Unités": 1},
-    "Écran 27 pouces": {"Prix": 250, "Conditionnement": "Carton", "Volume": 0.05, "Poids": 4.0, "Unités": 1},
-    "Clavier mécanique": {"Prix": 120, "Conditionnement": "Carton", "Volume": 0.01, "Poids": 1.2, "Unités": 1},
-    "Souris ergonomique": {"Prix": 45, "Conditionnement": "Carton", "Volume": 0.005, "Poids": 0.5, "Unités": 1},
-    "Casque audio": {"Prix": 90, "Conditionnement": "Demi-palette", "Volume": 0.08, "Poids": 3.0, "Unités": 6}
+    "Bonbons": {"Prix": 10, "Conditionnement": "Carton de 10 boites", "Volume": 0.036, "Poids": 6, "Unités": 10},
+    "Perceuses": {"Prix": 120, "Conditionnement": "Cartons de 6 perceuses", "Volume": 0.096, "Poids": 8, "Unités": 6},
+    "Petites vis": {"Prix": 30, "Conditionnement": "Carton de 10 000 vis", "Volume": 0.096, "Poids": 12, "Unités": 10000},
+    "Grandes vis": {"Prix": 35, "Conditionnement": "Carton de 8 000 vis", "Volume": 0.096, "Poids": 12, "Unités": 8000},
+    "Paire de ski": {"Prix": 200, "Conditionnement": "Paire unique par carton", "Volume": 0.12, "Poids": 10, "Unités": 1},
+    "Veste de sport": {"Prix": 50, "Conditionnement": "Carton de 50 vestes", "Volume": 0.288, "Poids": 6, "Unités": 50},
+    "Pantalon de sport": {"Prix": 40, "Conditionnement": "Carton de 50 pantalons", "Volume": 0.288, "Poids": 4, "Unités": 50},
+    "Paire de basket": {"Prix": 80, "Conditionnement": "Carton de 20 paires", "Volume": 0.288, "Poids": 9, "Unités": 20},
+    "Pack d'eau": {"Prix": 15, "Conditionnement": "Demi palette de 48 packs", "Volume": 0.96, "Poids": 432, "Unités": 48},
+    "Pack de bière": {"Prix": 25, "Conditionnement": "Demi palette de 55 packs", "Volume": 0.96, "Poids": 550, "Unités": 55},
+    "Gateaux secs": {"Prix": 30, "Conditionnement": "Demi palette de 120 boites", "Volume": 0.96, "Poids": 80, "Unités": 120},
+    "Pack de soda": {"Prix": 18, "Conditionnement": "Demi palette de 48 packs", "Volume": 0.96, "Poids": 432, "Unités": 48},
 }
 
 def generer_commandes():
