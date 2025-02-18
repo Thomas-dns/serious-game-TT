@@ -3,14 +3,22 @@ import pandas as pd
 
 from ressources.vehicules import Vehicle
 from ressources.orders.orders import Order, Orders
-
 from utils.tools import load_json_data
+from utils.map_logic import Zone, Warehouse
+
+from views.map_view import show_map_page
+from views.orders_view import show_orders_page
+from views.planning import show_planning_page
+
+from views.simulation_view import show_simulation_page
+
 def init_session_state():
+    # Initialisation de la page courante
+    if 'page' not in st.session_state:
+        st.session_state.page = 'main'
     # On initialise le round a 1
     if 'round' not in st.session_state:
         st.session_state.round = 1
-
-from utils.map_logic import Zone, Warehouse
 
 def init_session_state_round(round):
     st.session_state.fleet = []
@@ -23,7 +31,6 @@ def init_session_state_round(round):
     
     # Stocker la carte complète
     st.session_state.map_data = map_data
-    
     # Créer des objets Zone à partir de la clé "ZONES"
     zones_raw = map_data.get("ZONES", [])
     st.session_state.zones = [
@@ -59,27 +66,25 @@ def init_session_state_round(round):
     # Instancier Orders en lui passant la liste des noms d'entrepôts
     st.session_state.Orders = Orders(f"ressources/orders/order_{round}.json", st.session_state.warehouse_names)
 
-
-def main():
-    st.set_page_config(page_title="Serious Game - Supply Chain", layout="wide")
-    
-    # Initialiser toutes les variables de session
-    init_session_state()
-    init_session_state_round(st.session_state.round)
+def show_main_page():
     st.title("Serious Game - Supply Chain")
-
     st.write(f"Round actuel : {st.session_state.round}")
     
-    a, b = [], []
+    a = []
     for vehicule in st.session_state.fleet:
-            a.append(vehicule.nom)
+        a.append(vehicule.nom)
     st.write(f"vehicules : {a}")
     
     st.write(f"orders : {st.session_state.Orders.orders}")
     st.write(f"{st.session_state.Orders.get_warehouse_orders()}")
+    
     # Simple bouton de reset
     if st.button("Reset Round"):
         st.session_state.round = 1
+        st.rerun()
+
+    if st.button("Augmenter le round"):
+        st.session_state.round += 1
         st.rerun()
 
     # Afficher le round actuel
@@ -88,6 +93,74 @@ def main():
     st.write(st.session_state.warehouses_info)
     st.write(st.session_state.zones)
 
+def show_navigation():
+    col1, col2, col3, col4, col5 = st.columns(5)
+    
+    with col1:
+        if st.button("🏠 Main", use_container_width=True, 
+                    type="primary" if st.session_state.page == 'main' else "secondary"):
+            st.session_state.page = 'main'
+            st.rerun()
+            
+    with col2:
+        if st.button("🗺️ Map", use_container_width=True,
+                    type="primary" if st.session_state.page == 'map' else "secondary"):
+            st.session_state.page = 'map'
+            st.rerun()
+            
+    with col3:
+        if st.button("📦 Orders", use_container_width=True,
+                    type="primary" if st.session_state.page == 'orders' else "secondary"):
+            st.session_state.page = 'orders'
+            st.rerun()
+            
+    with col4:
+        if st.button("📅 Planning", use_container_width=True,
+                    type="primary" if st.session_state.page == 'planning' else "secondary"):
+            st.session_state.page = 'planning'
+            st.rerun()
+            
+    with col5:
+        if st.button("🔄 Simulation", use_container_width=True,
+                    type="primary" if st.session_state.page == 'simulation' else "secondary"):
+            st.session_state.page = 'simulation'
+            st.rerun()
+
+def main():
+    # Configuration de la page
+    st.set_page_config(
+        page_title="Supply Chain Game",
+        layout="wide",
+        initial_sidebar_state="collapsed"
+    )
+    
+    # Cacher la sidebar
+    hide_streamlit_style = """
+        <style>
+        #MainMenu {visibility: hidden;}
+        section[data-testid="stSidebar"] {display: none;}
+        </style>
+    """
+    st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+    
+    # Initialiser toutes les variables de session
+    init_session_state()
+    init_session_state_round(st.session_state.round)
+    
+    # Afficher la navigation
+    show_navigation()
+    
+    # Gérer l'affichage des pages
+    if st.session_state.page == 'main':
+        show_main_page()
+    elif st.session_state.page == 'map':
+        show_map_page()
+    elif st.session_state.page == 'orders':
+        show_orders_page()
+    elif st.session_state.page == 'planning':
+        show_planning_page()
+    elif st.session_state.page == 'simulation':
+        show_simulation_page()
 
 if __name__ == "__main__":
     main()

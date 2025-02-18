@@ -182,15 +182,21 @@ def display_vehicle_status():
 
 def display_commands():
     """Fonction principale qui appelle les deux affichages"""
-    display_warehouse_status()
-    display_vehicle_status()
+    # Section de gestion des stocks
+    st.subheader("📦 ÉTAT DES STOCKS ET CHARGEMENT")
+    tabs = st.tabs(["🏭 Stocks Entrepôts", "🚚 Chargement Véhicule"])
+    
+    with tabs[0]:
+        display_warehouse_status()
+    
+    with tabs[1]:
+        display_vehicle_status()
     
 ##############################################
 # Fonction principale (interface Streamlit)
 ##############################################
 
-def main():
-    st.set_page_config(page_title="Planning de Livraison Supply Chain", layout="wide")
+def show_planning_page():
     init_session_state()
     st.title("Planning de Livraison Supply Chain")
     
@@ -295,8 +301,9 @@ def main():
             else:
                 st.error(msg)
         
+        st.divider()
         # Validation finale du trajet (création d'un Route)
-        if st.button("Valider trajet"):
+        if st.button("Valider trajet", type="primary"):
             if st.session_state.steps:
                 # Vérifier que le véhicule est vide en fin de trajet
                 if any(quantity > 0 for quantity in st.session_state.content_copy.values()):
@@ -321,8 +328,3 @@ def main():
 
     display_routes()
 
-    st.write(st.session_state.routes)
-
-
-if __name__ == "__main__":
-    main()

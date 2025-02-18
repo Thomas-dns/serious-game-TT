@@ -1,7 +1,7 @@
 import streamlit as st
 from utils.map_logic import create_map
 
-def map_view():
+def show_map_page():
     st.title("Map View")
     
     m, descriptions = create_map()
@@ -21,6 +21,3 @@ def map_view():
     for point in st.session_state.warehouses_info:
         with st.expander(f"Entrepôt : {point.nom}"):
             st.write(point.description)
-
-if __name__ == "__main__":
-    map_view()

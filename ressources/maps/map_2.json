@@ -1,0 +1,131 @@
+{
+    "ZONES": [
+        {
+            "nom": "Ville",
+            "coordonnees": [
+                [2.355194, 48.902265],
+                [2.389526, 48.90046],
+                [2.410126, 48.871581],
+                [2.402573, 48.835007],
+                [2.351761, 48.818291],
+                [2.274857, 48.8332],
+                [2.25769, 48.847201],
+                [2.281723, 48.880608],
+                [2.320175, 48.901814],
+                [2.355194, 48.902265]
+            ],
+            "style": {
+                "fillColor": "#28a745",
+                "color": "#000000",
+                "weight": 2,
+                "fillOpacity": 0.5,
+                "zIndex": 0
+            },
+            "description": "Zone de la ville",
+            "parameters": {
+                "vitesse_maximale": 50,
+                "critair_min": 2
+            }
+        },
+        {
+            "nom": "Zone 1",
+            "coordonnees": [
+                [2.366867, 48.880608],
+                [2.387466, 48.880608],
+                [2.396393, 48.868873],
+                [2.38884, 48.849911],
+                [2.360687, 48.863456],
+                [2.366867, 48.880608]
+            ],
+            "style": {
+                "fillColor": "#FF0000",
+                "color": "#000000",
+                "weight": 2,
+                "fillOpacity": 0.5,
+                "zIndex": 1
+            },
+            "description": "Zone industrielle avec entrepôts",
+            "parameters": {
+                "vitesse_maximale": 70,
+                "critair_min": 3
+            }
+        },
+        {
+            "nom": "Zone 2",
+            "coordonnees": [
+                [2.338715, 48.88512],
+                [2.300949, 48.875192],
+                [2.279663, 48.850814],
+                [2.305756, 48.838169],
+                [2.341461, 48.849459],
+                [2.338715, 48.88512]
+            ],
+            "style": {
+                "fillColor": "#FFA500",
+                "color": "#000000",
+                "weight": 2,
+                "fillOpacity": 0.5,
+                "zIndex": 1
+            },
+            "description": "Zone commerciale",
+            "parameters": {
+                "vitesse_maximale": 30,
+                "critair_min": 1
+            }
+        },
+        {
+            "nom": "Zone 3",
+            "coordonnees": [
+                [2.316055, 48.868873],
+                [2.297516, 48.858038],
+                [2.307816, 48.849008],
+                [2.325668, 48.857135],
+                [2.316055, 48.868873]
+            ],
+            "style": {
+                "fillColor": "#FFA500",
+                "color": "#000000",
+                "weight": 2,
+                "fillOpacity": 0.5,
+                "zIndex": 1
+            },
+            "description": "Zone commerciale",
+            "parameters": {
+                "vitesse_maximale": 30,
+                "critair_min": 1
+            }
+        }
+    ],
+    "DELIVERY_POINTS": [
+        {
+            "nom": "Point de livraison 1",
+            "type": "delivery",
+            "coordonnees": [48.858755, 2.312279],
+            "description": "Point de livraison client"
+        },
+        {
+            "nom": "Point de livraison 2",
+            "type": "delivery",
+            "coordonnees": [48.867106, 2.379227],
+            "description": "Point de livraison client"
+        },
+        {
+            "nom": "Entrepot 1",
+            "type": "warehouse",
+            "coordonnees": [48.864059, 2.352276],
+            "description": "Point de livraison principal avec accès poids lourds"
+        },
+        {
+            "nom": "Entrepot 2",
+            "type": "warehouse",
+            "coordonnees": [48.851973, 2.32996],
+            "description": "Entrepôt secondaire pour stockage temporaire"
+        },
+        {
+            "nom": "Start",
+            "type": "warehouse",
+            "coordonnees": [48.837183, 2.368584],
+            "description": "Entrepôt secondaire pour stockage temporaire"
+        }
+    ]
+}

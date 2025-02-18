@@ -1,0 +1,48 @@
+{
+    "ORDERS": [
+        {
+            "id": "BC003",
+            "start": "Start",
+            "end": "Entrepot 1",
+            "content": {
+                "volume_m3": 10.0,
+                "poids_kg": 1500,
+                "description": "Palettes de marchandises diverses"
+            },
+            "delivery_time": "2025-02-18T09:00:00"
+        },
+        {
+            "id": "BC004",
+            "start": "Start",
+            "end": "Entrepot 2",
+            "content": {
+                "volume_m3": 3.5,
+                "poids_kg": 500,
+                "description": "Petit colis"
+            },
+            "delivery_time": "2025-02-18T15:00:00"
+        },
+        {
+            "id": "BC005",
+            "start": "Start",
+            "end": "Point de livraison 1",
+            "content": {
+                "volume_m3": 2.0,
+                "poids_kg": 200,
+                "description": "Colis fragile"
+            },
+            "delivery_time": "2025-02-18T10:30:00"
+        },
+        {
+            "id": "BC006",
+            "start": "Start",
+            "end": "Point de livraison 2",
+            "content": {
+                "volume_m3": 4.5,
+                "poids_kg": 300,
+                "description": "Produits alimentaires"
+            },
+            "delivery_time": "2025-02-18T11:45:00"
+        }
+    ]
+}

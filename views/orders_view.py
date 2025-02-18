@@ -2,7 +2,7 @@ import streamlit as st
 from utils.tools import load_json_data
 import pandas as pd
 
-def orders_view():
+def show_orders_page():
     st.title("📦 Order list")
     
     current_round = st.session_state.round
@@ -13,5 +13,3 @@ def orders_view():
 
     st.dataframe(df, use_container_width=True)
 
-if __name__ == "__main__":
-    orders_view()

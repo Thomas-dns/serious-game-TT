@@ -56,7 +56,7 @@ def create_map():
             measure_control=False,
             fullscreen_control=False,
             attribution_control=True,
-            tiles=""  # Pour avoir un fond blanc
+            #tiles=""  # Pour avoir un fond blanc
         )
 
     # Ajouter les zones

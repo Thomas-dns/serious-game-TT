@@ -4,7 +4,7 @@ import streamlit as st
 from utils.game_logic import Simulation
 import pandas as pd
 
-def simulation_view():
+def show_simulation_page():
     st.title("🔄 Simulation des livraisons")
 
     if st.button("Lancer la simulation avec pas de temps"):
@@ -55,7 +55,3 @@ def simulation_view():
 
     else:
         st.write("Cliquez sur le bouton pour lancer la simulation.")
-
-
-if __name__ == "__main__":
-    simulation_view()

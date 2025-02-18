@@ -22,7 +22,6 @@ class Vehicle:
         self.cout_utilisation_km_vide = cout_utilisation_km_vide
         self.cout_fixe_utilisation_journalier = cout_fixe_utilisation_journalier
 
-        self.is_used = False
         self.storage_point = storage_point
         
         self.content = {}
