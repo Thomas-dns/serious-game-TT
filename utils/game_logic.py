@@ -177,8 +177,8 @@ import re
 class Simulation:
     def __init__(self, time_step_seconds=60):
         self.time_step = datetime.timedelta(seconds=time_step_seconds)
-        self.start_time = datetime.datetime.combine(datetime.date.today(), datetime.time(8, 0, 0))
-        # Par exemple, une simulation sur 8 heures
+        self.start_time = datetime.datetime(2025, 2, 10, 8, 0, 0)
+        # une simulation sur 8 heures ( on peut augmenter )
         self.end_time = self.start_time + datetime.timedelta(hours=8)
         self.events = []  # liste des événements de simulation
 
@@ -414,6 +414,7 @@ class Simulation:
                     quantity_delivered += float(match.group(1))
                     actual_delivery_time = event["time"] # On garde l'heure de la derniere livraison au point de livraison
 
+            #print("heure de livraison",actual_delivery_time, required_delivery_time)
             if delivered and quantity_delivered >= 0.99:
                 if actual_delivery_time <= required_delivery_time:
                     delivery_status[order_id] = "on_time"

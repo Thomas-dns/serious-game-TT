@@ -9,7 +9,7 @@ from utils.map_logic import Zone, Warehouse
 from views.map_view import show_map_page
 from views.orders_view import show_orders_page
 from views.planning import show_planning_page
-
+from views.transport_view import transport_view
 from views.simulation_view import show_simulation_page
 
 def init_session_state():
@@ -70,14 +70,9 @@ def show_main_page():
     st.title("Serious Game - Supply Chain")
     st.write(f"Round actuel : {st.session_state.round}")
     
-    a = []
-    for vehicule in st.session_state.fleet:
-        a.append(vehicule.nom)
-    st.write(f"vehicules : {a}")
-    
-    st.write(f"orders : {st.session_state.Orders.orders}")
-    st.write(f"{st.session_state.Orders.get_warehouse_orders()}")
-    
+    transport_view()
+
+    show_orders_page()
     # Simple bouton de reset
     if st.button("Reset Round"):
         st.session_state.round = 1
@@ -87,14 +82,8 @@ def show_main_page():
         st.session_state.round += 1
         st.rerun()
 
-    # Afficher le round actuel
-    st.write(f"Round actuel : {st.session_state.round}")
-
-    st.write(st.session_state.warehouses_info)
-    st.write(st.session_state.zones)
-
 def show_navigation():
-    col1, col2, col3, col4, col5 = st.columns(5)
+    col1, col2, col3, col4= st.columns(4)
     
     with col1:
         if st.button("🏠 Main", use_container_width=True, 
@@ -109,18 +98,12 @@ def show_navigation():
             st.rerun()
             
     with col3:
-        if st.button("📦 Orders", use_container_width=True,
-                    type="primary" if st.session_state.page == 'orders' else "secondary"):
-            st.session_state.page = 'orders'
-            st.rerun()
-            
-    with col4:
         if st.button("📅 Planning", use_container_width=True,
                     type="primary" if st.session_state.page == 'planning' else "secondary"):
             st.session_state.page = 'planning'
             st.rerun()
             
-    with col5:
+    with col4:
         if st.button("🔄 Simulation", use_container_width=True,
                     type="primary" if st.session_state.page == 'simulation' else "secondary"):
             st.session_state.page = 'simulation'

@@ -9,7 +9,7 @@
                 "poids_kg": 2500,
                 "description": "Palettes de marchandises diverses"
             },
-            "delivery_time": "2025-02-10T8:45:00"
+            "delivery_time": "2025-02-18T8:45:00"
         },
         {
             "id": "BC002",
@@ -20,7 +20,7 @@
                 "poids_kg": 800,
                 "description": "Petit colis"
             },
-            "delivery_time": "2025-02-10T14:45:00"
+            "delivery_time": "2025-02-18T14:45:00"
         }
     ]
 }

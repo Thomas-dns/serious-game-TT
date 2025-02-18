@@ -12,7 +12,7 @@
             "cout_utilisation_km_charge": 0.54,
             "cout_utilisation_km_vide": 0.41,
             "cout_fixe_utilisation_journalier": 204.00,
-            "storage_point": "Start"
+            "storage_point": "Entrepot 1"
         },
         {
             "nom": "VL_elec",

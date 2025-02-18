@@ -11,13 +11,9 @@ class Order:
         # A terme on peut juste creer des object product (plein d'object = une commande)
         if isinstance(delivery_time, str):
             self.delivery_time = datetime.datetime.strptime(delivery_time, "%Y-%m-%dT%H:%M:%S")
-            print("eeeeeeeee")
-            print(type(self.delivery_time))
         else:
             self.delivery_time = delivery_time
-            print("ddddddd")
         
-        print(f"RRRRRRRRR {type(self.delivery_time)}")
 
         self.warehouse = warehouse # dict avec les entrepots logistique en keys
                 
