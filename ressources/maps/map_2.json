@@ -1,131 +1,232 @@
 {
     "ZONES": [
         {
-            "nom": "Ville",
+            "nom": "Aire urbaine",
             "coordonnees": [
-                [2.355194, 48.902265],
-                [2.389526, 48.90046],
-                [2.410126, 48.871581],
-                [2.402573, 48.835007],
-                [2.351761, 48.818291],
-                [2.274857, 48.8332],
-                [2.25769, 48.847201],
-                [2.281723, 48.880608],
-                [2.320175, 48.901814],
-                [2.355194, 48.902265]
+                [1.428909, 43.652224],
+                [1.449509, 43.645516],
+                [1.473198, 43.644771],
+                [1.477318, 43.635827],
+                [1.485558, 43.60451],
+                [1.493797, 43.59556],
+                [1.49929, 43.58064],
+                [1.493454, 43.555266],
+                [1.468048, 43.573675],
+                [1.456375, 43.570691],
+                [1.442299, 43.575914],
+                [1.419296, 43.567457],
+                [1.412773, 43.569447],
+                [1.39595, 43.598792],
+                [1.416893, 43.614454],
+                [1.422729, 43.651727],
+                [1.428909, 43.652224]
             ],
             "style": {
-                "fillColor": "#28a745",
+                "fillColor": "#0000FF",
                 "color": "#000000",
                 "weight": 2,
-                "fillOpacity": 0.5,
+                "fillOpacity": 0.2,
                 "zIndex": 0
             },
-            "description": "Zone de la ville",
+            "description": "Limité à 50 kph - Crit'Air 4 - Pas de restriction d'horaire",
             "parameters": {
                 "vitesse_maximale": 50,
-                "critair_min": 2
+                "critair_min": 4
             }
         },
         {
-            "nom": "Zone 1",
+            "nom": "Centre ville",
             "coordonnees": [
-                [2.366867, 48.880608],
-                [2.387466, 48.880608],
-                [2.396393, 48.868873],
-                [2.38884, 48.849911],
-                [2.360687, 48.863456],
-                [2.366867, 48.880608]
+                [1.433716, 43.610477],
+                [1.441956, 43.611222],
+                [1.448479, 43.605256],
+                [1.452255, 43.59556],
+                [1.440239, 43.592576],
+                [1.432686, 43.592328],
+                [1.426506, 43.603516],
+                [1.427193, 43.609234],
+                [1.433716, 43.610477]
             ],
             "style": {
-                "fillColor": "#FF0000",
-                "color": "#000000",
+                "fillColor": "#32CD32",
+                "color": "#006400",
                 "weight": 2,
-                "fillOpacity": 0.5,
+                "fillOpacity": 0.4,
                 "zIndex": 1
             },
-            "description": "Zone industrielle avec entrepôts",
+            "description": "Limité à 30 kph - Crit'Air 3 - Pas d'horaires",
             "parameters": {
-                "vitesse_maximale": 70,
+                "vitesse_maximale": 30,
                 "critair_min": 3
             }
         },
         {
-            "nom": "Zone 2",
+            "nom": "ZAC Balma",
             "coordonnees": [
-                [2.338715, 48.88512],
-                [2.300949, 48.875192],
-                [2.279663, 48.850814],
-                [2.305756, 48.838169],
-                [2.341461, 48.849459],
-                [2.338715, 48.88512]
+                [1.489677, 43.613708],
+                [1.494141, 43.616567],
+                [1.493626, 43.622159],
+                [1.50547, 43.620543],
+                [1.518517, 43.620668],
+                [1.527958, 43.613087],
+                [1.517143, 43.608612],
+                [1.518002, 43.605878],
+                [1.507359, 43.599787],
+                [1.503582, 43.59643],
+                [1.496716, 43.59643],
+                [1.489677, 43.613708]
             ],
             "style": {
-                "fillColor": "#FFA500",
+                "fillColor": "#8B008B",
                 "color": "#000000",
                 "weight": 2,
                 "fillOpacity": 0.5,
-                "zIndex": 1
+                "zIndex": 2
             },
-            "description": "Zone commerciale",
+            "description": "Zone d'activité commerciale de Balma - Limité à 30 kph - Crit'air 4 - Pas d'horaires",
             "parameters": {
                 "vitesse_maximale": 30,
-                "critair_min": 1
+                "critair_min": 4
             }
         },
         {
-            "nom": "Zone 3",
+            "nom": "ZI Colomiers",
             "coordonnees": [
-                [2.316055, 48.868873],
-                [2.297516, 48.858038],
-                [2.307816, 48.849008],
-                [2.325668, 48.857135],
-                [2.316055, 48.868873]
+                [1.349602, 43.635081],
+                [1.369858, 43.616442],
+                [1.368828, 43.606251],
+                [1.29158, 43.605753],
+                [1.307716, 43.633093],
+                [1.349602, 43.635081]
             ],
             "style": {
-                "fillColor": "#FFA500",
+                "fillColor": "#9400D3",
                 "color": "#000000",
                 "weight": 2,
                 "fillOpacity": 0.5,
-                "zIndex": 1
+                "zIndex": 3
             },
-            "description": "Zone commerciale",
+            "description": "Zone industrielle - limité à 30 kph - Crit'Air 4 - Pas d'horaires",
             "parameters": {
                 "vitesse_maximale": 30,
-                "critair_min": 1
+                "critair_min": 4
+            }
+        },
+        {
+            "nom": "ZI Cugnaux",
+            "coordonnees": [
+                [1.339989, 43.550041],
+                [1.325912, 43.529634],
+                [1.343422, 43.516191],
+                [1.368484, 43.522166],
+                [1.377411, 43.531874],
+                [1.367111, 43.547553],
+                [1.339989, 43.550041]
+            ],
+            "style": {
+                "fillColor": "#8B008B",
+                "color": "#000000",
+                "weight": 2,
+                "fillOpacity": 0.5,
+                "zIndex": 4
+            },
+            "description": "Zone industrielle de Cugnaux - Limitée à 30 kph - Crit'Air 4 - Pas d'horaires",
+            "parameters": {
+                "vitesse_maximale": 30,
+                "critair_min": 4
+            }
+        },
+        {
+            "nom": "Zone verte",
+            "coordonnees": [
+                [1.416721, 43.5371],
+                [1.415176, 43.526398],
+                [1.412086, 43.515194],
+                [1.420669, 43.514448],
+                [1.423244, 43.51868],
+                [1.426163, 43.535732],
+                [1.416721, 43.5371]
+            ],
+            "style": {
+                "fillColor": "#008000",
+                "color": "#000000",
+                "weight": 2,
+                "fillOpacity": 0.5,
+                "zIndex": 5
+            },
+            "description": "Limité à 20 kph - Crit'Air 2 - Pas d'horaires",
+            "parameters": {
+                "vitesse_maximale": 20,
+                "critair_min": 2
             }
         }
     ],
     "DELIVERY_POINTS": [
         {
-            "nom": "Point de livraison 1",
-            "type": "delivery",
-            "coordonnees": [48.858755, 2.312279],
-            "description": "Point de livraison client"
-        },
-        {
-            "nom": "Point de livraison 2",
-            "type": "delivery",
-            "coordonnees": [48.867106, 2.379227],
-            "description": "Point de livraison client"
-        },
-        {
-            "nom": "Entrepot 1",
-            "type": "warehouse",
-            "coordonnees": [48.864059, 2.352276],
-            "description": "Point de livraison principal avec accès poids lourds"
-        },
-        {
-            "nom": "Entrepot 2",
-            "type": "warehouse",
-            "coordonnees": [48.851973, 2.32996],
-            "description": "Entrepôt secondaire pour stockage temporaire"
-        },
-        {
             "nom": "Start",
             "type": "warehouse",
-            "coordonnees": [48.837183, 2.368584],
-            "description": "Entrepôt secondaire pour stockage temporaire"
+            "coordonnees": [43.514697, 1.499634],
+            "description": "Entrepot de départ - Siège de l'entreprise"
+        },
+        {
+            "nom": "Entrepôt n°1",
+            "type": "warehouse",
+            "coordonnees": [43.585365, 1.531219],
+            "description": "Entrepôt de Quint-Fonsegrives"
+        },
+        {
+            "nom": "Entrepôt n°2",
+            "type": "warehouse",
+            "coordonnees": [43.58437, 1.348572],
+            "description": "Entrepôt de Tournefeuille"
+        },
+        {
+            "nom": "Client N°1 - Intramarché",
+            "type": "delivery",
+            "coordonnees": [43.612465, 1.50341],
+            "description": "Magasin de grande surface"
+        },
+        {
+            "nom": "Client n°2 - Lareine Merlin",
+            "type": "delivery",
+            "coordonnees": [43.60103, 1.441269],
+            "description": "Magasin de bricolage"
+        },
+        {
+            "nom": "Client n°3 - Bricoloco",
+            "type": "delivery",
+            "coordonnees": [43.573675, 1.487274],
+            "description": "Magasin de Bricolage"
+        },
+        {
+            "nom": "Client n°4 - Decatcours",
+            "type": "delivery",
+            "coordonnees": [43.619922, 1.318359],
+            "description": "Magasin de sport"
+        },
+        {
+            "nom": "Client n°5 - Super Vu",
+            "type": "delivery",
+            "coordonnees": [43.614454, 1.342392],
+            "description": "Magasin de grande surface"
+        },
+        {
+            "nom": "Client n°6 - Sport 1500",
+            "type": "delivery",
+            "coordonnees": [43.533367, 1.350632],
+            "description": "Magasin de sport"
+        },
+        {
+            "nom": "Client n°7 - Auchantier",
+            "type": "delivery",
+            "coordonnees": [43.644026, 1.431313],
+            "description": "Magasin de grande surface"
+        },
+        {
+            "nom": "Client n°8 - TFC Shop",
+            "type": "delivery",
+            "coordonnees": [43.595809, 1.436119],
+            "description": "Magasin officiel du TFC"
         }
     ]
 }

@@ -28,10 +28,10 @@
                 "fillOpacity": 0.2,
                 "zIndex": 0
             },
-            "description": "Limité à 50 kph - Pas de restriction Crit'Air - Pas de restriction d'horaire",
+            "description": "Limité à 50 kph - Crit'Air 3 - Pas de restriction d'horaire",
             "parameters": {
                 "vitesse_maximale": 50,
-                "critair_min": 0
+                "critair_min": 3
             }
         },
         {
@@ -54,10 +54,10 @@
                 "fillOpacity": 0.4,
                 "zIndex": 1
             },
-            "description": "Limité à 30kph - Pas de Crit'Air - Pas d'horaires",
+            "description": "Limité à 30kph - Crit'Air 2 - Pas d'horaires",
             "parameters": {
                 "vitesse_maximale": 30,
-                "critair_min": 0
+                "critair_min": 2
             }
         },
         {
@@ -83,10 +83,10 @@
                 "fillOpacity": 0.5,
                 "zIndex": 2
             },
-            "description": "Zone d'activité commerciale de Balma - Limité à 30 kph - Pas de Crit'air - Pas d'horaires",
+            "description": "Zone d'activité commerciale de Balma - Limité à 30 kph - Crit'air 3 - Pas d'horaires",
             "parameters": {
                 "vitesse_maximale": 30,
-                "critair_min": 0
+                "critair_min": 3
             }
         },
         {
@@ -106,10 +106,10 @@
                 "fillOpacity": 0.5,
                 "zIndex": 3
             },
-            "description": "Zone industrielle - limité à 30 kph - Pas de Crit'Air - Pas d'horaires",
+            "description": "Zone industrielle - limité à 30 kph - Crit'Air 3 - Pas d'horaires",
             "parameters": {
                 "vitesse_maximale": 30,
-                "critair_min": 0
+                "critair_min": 3
             }
         },
         {
@@ -130,10 +130,10 @@
                 "fillOpacity": 0.5,
                 "zIndex": 4
             },
-            "description": "Zone industrielle de Cugnaux - Limitée à 30 kph - Pas d'horaires",
+            "description": "Zone industrielle de Cugnaux - Limitée à 30 kph - Crit'Air 3 - Pas d'horaires",
             "parameters": {
                 "vitesse_maximale": 30,
-                "critair_min": 0
+                "critair_min": 3
             }
         },
         {
@@ -154,10 +154,10 @@
                 "fillOpacity": 0.5,
                 "zIndex": 5
             },
-            "description": "Limité à 20kph - Pas de Crit'air - Pas d'horaires",
+            "description": "Limité à 20kph - Crit'Air 1 - Interdit entre 21h et 8h",
             "parameters": {
                 "vitesse_maximale": 20,
-                "critair_min": 0
+                "critair_min": 1
             }
         }
     ],
@@ -166,7 +166,7 @@
             "nom": "Client n°2 - Lareine Merlin",
             "type": "delivery",
             "coordonnees": [43.60103, 1.441269],
-            "description": "Magasin de bricolage"
+            "description": "Magasin de Bricolage"
         },
         {
             "nom": "Client n°3 - Bricoloco",
@@ -187,16 +187,64 @@
             "description": "Magasin de grande surface"
         },
         {
-            "nom": "Client N°1 - Intramarché",
+            "nom": "Client n°6 - Sport 1500",
             "type": "delivery",
-            "coordonnees": [43.612465, 1.50341],
+            "coordonnees": [43.533367, 1.350632],
+            "description": "Magasin de sport"
+        },
+        {
+            "nom": "Client n°7 - Auchantier",
+            "type": "delivery",
+            "coordonnees": [43.644026, 1.431313],
             "description": "Magasin de grande surface"
+        },
+        {
+            "nom": "Client n°8 - Shop TFC",
+            "type": "delivery",
+            "coordonnees": [43.595809, 1.436119],
+            "description": "Magasin officiel du TFC"
+        },
+        {
+            "nom": "Entrepôt n°2",
+            "type": "warehouse",
+            "coordonnees": [43.58437, 1.348572],
+            "description": "Entrepôt de Tournefeuille"
         },
         {
             "nom": "Start",
             "type": "warehouse",
             "coordonnees": [43.514697, 1.499634],
             "description": "Entrepot de départ - Siège de l'entreprise"
+        },
+        {
+            "nom": "Client n°9 - Tennis shop",
+            "type": "delivery",
+            "coordonnees": [43.668865, 1.415863],
+            "description": "Magasin de tennis"
+        },
+        {
+            "nom": "Client n°10 - Lepaclerc",
+            "type": "delivery",
+            "coordonnees": [43.596803, 1.398697],
+            "description": "Magasin de grande surface"
+        },
+        {
+            "nom": "Entrepôt n°3",
+            "type": "warehouse",
+            "coordonnees": [43.623153, 1.4114],
+            "description": "Entrepôt du Stade"
+        },
+        {
+            "nom": "Client n°1 - Intramarché",
+            "type": "delivery",
+            "coordonnees": [43.612465, 1.50341],
+            "description": "Magasin de grande surface"
+        },
+        {
+            "nom": "Entrepôt n°1",
+            "type": "warehouse",
+            "coordonnees": [43.585365, 1.531219],
+            "description": "Entrepôt de Quint-Fonsegrives"
         }
     ]
 }
