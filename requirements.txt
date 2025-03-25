@@ -1,6 +1,10 @@
-streamlit>=1.24.0
-leafmap>=0.21.0
-geopandas>=0.13.0
-shapely>=2.0.0
+streamlit>=1.22.0
+pandas>=1.5.3
+geopandas>=0.12.2
 folium>=0.14.0
-pandas>=2.0.0
+leafmap>=0.18.0
+shapely>=2.0.1
+pyproj>=3.4.1
+matplotlib>=3.7.1
+datetime>=5.0
+numpy>=1.24.3
