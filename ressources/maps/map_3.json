@@ -1,0 +1,203 @@
+{
+    "ZONES": [
+      {
+        "nom": "Aire urbaine",
+        "coordonnees": [
+          [1.428909, 43.652224],
+          [1.449509, 43.645516],
+          [1.473198, 43.644771],
+          [1.477318, 43.635827],
+          [1.485558, 43.60451],
+          [1.493797, 43.59556],
+          [1.49929, 43.58064],
+          [1.493454, 43.555266],
+          [1.468048, 43.573675],
+          [1.456375, 43.570691],
+          [1.442299, 43.575914],
+          [1.419296, 43.567457],
+          [1.412773, 43.569447],
+          [1.39595, 43.598792],
+          [1.416893, 43.614454],
+          [1.422729, 43.651727],
+          [1.428909, 43.652224]
+        ],
+        "style": {
+          "fillColor": "Blue",
+          "color": "#000000",
+          "weight": 2,
+          "fillOpacity": 0.2,
+          "zIndex": 0
+        },
+        "description": "Limité à 50 kph - Pas de restriction Crit'Air - Pas de restriction d'horaire",
+        "parameters": {
+          "vitesse_maximale": 50,
+          "critair_min": 0
+        }
+      },
+      {
+        "nom": "Centre ville",
+        "coordonnees": [
+          [1.433716, 43.610477],
+          [1.441956, 43.611222],
+          [1.448479, 43.605256],
+          [1.452255, 43.59556],
+          [1.440239, 43.592576],
+          [1.432686, 43.592328],
+          [1.426506, 43.603516],
+          [1.427193, 43.609234],
+          [1.433716, 43.610477]
+        ],
+        "style": {
+          "fillColor": "LimeGreen",
+          "color": "DarkGreen",
+          "weight": 2,
+          "fillOpacity": 0.4,
+          "zIndex": 1
+        },
+        "description": "Limité à 30kph - Pas de Crit'Air - Pas d'horaires",
+        "parameters": {
+          "vitesse_maximale": 30,
+          "critair_min": 0
+        }
+      },
+      {
+        "nom": "ZAC Balma",
+        "coordonnees": [
+          [1.489677, 43.613708],
+          [1.494141, 43.616567],
+          [1.493626, 43.622159],
+          [1.50547, 43.620543],
+          [1.518517, 43.620668],
+          [1.527958, 43.613087],
+          [1.517143, 43.608612],
+          [1.518002, 43.605878],
+          [1.507359, 43.599787],
+          [1.503582, 43.59643],
+          [1.496716, 43.59643],
+          [1.489677, 43.613708]
+        ],
+        "style": {
+          "fillColor": "DarkMagenta",
+          "color": "#000000",
+          "weight": 2,
+          "fillOpacity": 0.5,
+          "zIndex": 2
+        },
+        "description": "Zone d'activité commerciale de Balma - Limité à 30 kph - Pas de Crit'air - Pas d'horaires",
+        "parameters": {
+          "vitesse_maximale": 30,
+          "critair_min": 0
+        }
+      },
+      {
+        "nom": "ZI Colomiers",
+        "coordonnees": [
+          [1.349602, 43.635081],
+          [1.369858, 43.616442],
+          [1.368828, 43.606251],
+          [1.29158, 43.605753],
+          [1.307716, 43.633093],
+          [1.349602, 43.635081]
+        ],
+        "style": {
+          "fillColor": "DarkViolet",
+          "color": "#000000",
+          "weight": 2,
+          "fillOpacity": 0.5,
+          "zIndex": 3
+        },
+        "description": "Zone industrielle - limité à 30 kph - Pas de Crit'Air - Pas d'horaires",
+        "parameters": {
+          "vitesse_maximale": 30,
+          "critair_min": 0
+        }
+      },
+      {
+        "nom": "ZI Cugnaux",
+        "coordonnees": [
+          [1.339989, 43.550041],
+          [1.325912, 43.529634],
+          [1.343422, 43.516191],
+          [1.368484, 43.522166],
+          [1.377411, 43.531874],
+          [1.367111, 43.547553],
+          [1.339989, 43.550041]
+        ],
+        "style": {
+          "fillColor": "DarkMagenta",
+          "color": "#000000",
+          "weight": 2,
+          "fillOpacity": 0.5,
+          "zIndex": 4
+        },
+        "description": "Zone industrielle de Cugnaux - Limitée à 30 kph - Pas d'horaires",
+        "parameters": {
+          "vitesse_maximale": 30,
+          "critair_min": 0
+        }
+      },
+      {
+        "nom": "Zone verte",
+        "coordonnees": [
+          [1.416721, 43.5371],
+          [1.415176, 43.526398],
+          [1.412086, 43.515194],
+          [1.420669, 43.514448],
+          [1.423244, 43.51868],
+          [1.426163, 43.535732],
+          [1.416721, 43.5371]
+        ],
+        "style": {
+          "fillColor": "Green",
+          "color": "#000000",
+          "weight": 2,
+          "fillOpacity": 0.5,
+          "zIndex": 5
+        },
+        "description": "Limité à 20kph - Pas de Crit'air - Pas d'horaires",
+        "parameters": {
+          "vitesse_maximale": 20,
+          "critair_min": 0
+        }
+      }
+    ],
+    "DELIVERY_POINTS": [
+      {
+        "nom": "Client n°2 - Lareine Merlin",
+        "type": "delivery",
+        "coordonnees": [43.60103, 1.441269],
+        "description": "Magasin de bricolage"
+      },
+      {
+        "nom": "Client n°3 - Bricoloco",
+        "type": "delivery",
+        "coordonnees": [43.573675, 1.487274],
+        "description": "Magasin de bricolage"
+      },
+      {
+        "nom": "Client n°4 - Decatcours",
+        "type": "delivery",
+        "coordonnees": [43.619922, 1.318359],
+        "description": "Magasin de sport"
+      },
+      {
+        "nom": "Client n°5 - Super Vu",
+        "type": "delivery",
+        "coordonnees": [43.614454, 1.342392],
+        "description": "Magasin de grande surface"
+      },
+      {
+        "nom": "Client N°1 - Intramarché",
+        "type": "delivery",
+        "coordonnees": [43.612465, 1.50341],
+        "description": "Magasin de grande surface"
+      },
+      {
+        "nom": "Start",
+        "type": "warehouse",
+        "coordonnees": [43.514697, 1.499634],
+        "description": "Entrepot de départ - Siège de l'entreprise"
+      }
+    ]
+  }
+  

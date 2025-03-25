@@ -1,0 +1,38 @@
+{
+    "ORDERS": [
+      {
+        "id": "BC00A",
+        "start": "Start",
+        "end": "Client N°1 - Intramarché",
+        "content": {
+          "volume_m3": 10.0,
+          "poids_kg": 1500,
+          "description": "Produits de grande surface"
+        },
+        "delivery_time": "2025-03-17T09:00:00"
+      },
+      {
+        "id": "BC00B",
+        "start": "Start",
+        "end": "Client n°2 - Lareine Merlin",
+        "content": {
+          "volume_m3": 5.0,
+          "poids_kg": 800,
+          "description": "Matériel de bricolage"
+        },
+        "delivery_time": "2025-03-17T10:30:00"
+      },
+      {
+        "id": "BC00C",
+        "start": "Start",
+        "end": "Client n°3 - Bricoloco",
+        "content": {
+          "volume_m3": 6.5,
+          "poids_kg": 1200,
+          "description": "Outillage divers"
+        },
+        "delivery_time": "2025-03-17T12:00:00"
+      }
+    ]
+  }
+  

@@ -4,7 +4,7 @@ import streamlit as st
 import pandas as pd
 import datetime
 import re
-from utils.travel import distance_by_zones_exclusive
+from utils.travel import distance_by_zones_exclusive, distance_network, calculate_segment_distance
 
 class Operation:
     """Représente une opération de chargement/déchargement de produit"""
@@ -169,6 +169,27 @@ class Simulation:
             total_distance += dist_km
 
         return datetime.timedelta(hours=total_hours), total_cost, total_emission, total_distance
+    
+    def compute_segment_time_network(self, vehicle, start, end, load):
+        """Calcule le temps, coût, émission et distance entre deux points"""
+        valid_roads = vehicle.valid_roads
+        segments = distance_network(start, end, valid_roads)
+
+        total_hours = total_cost = total_emission = total_distance = 0.0
+
+        for segment in segments['segments']:
+            distance = segment['distance']
+            seg_speed = segment['max_speed']
+            speed = min(vehicle.vitesse_max, seg_speed)
+
+            segment_time_hours = distance / speed
+            
+            total_hours += segment_time_hours
+            total_cost += vehicle.travel_cost_km(load) * distance
+            total_emission += vehicle.travel_emission_km(load) * distance
+            total_distance += distance
+        
+        return datetime.timedelta(hours=total_hours), total_cost, total_emission, total_distance
 
     def is_stock_available(self, warehouse, step):
         """Vérifie la disponibilité du stock pour les opérations"""
@@ -184,15 +205,23 @@ class Simulation:
     def process_step_operations(self, warehouse, vehicle, operations, simulation_clock):
         """Exécute les opérations d'une étape"""
         state = self.vehicle_states[vehicle]
+        vehicle_obj = next(v for v in st.session_state.fleet if v.nom == vehicle)
+        total_loading_time = 0
+
         for op in operations:
+            order = self.simulation_orders.orders[op.produit]
+            quantity_kg = op.quantite * order.content['poids_kg']
+
             if op.type == "Charger":
                 self.simulation_orders.update_warehouse_content(warehouse, op.produit, -op.quantite)
                 self.log_event(simulation_clock, vehicle, f"Chargement de {op.quantite} de {op.produit} à {warehouse}")
                 state["current_load"] += op.quantite * self.simulation_orders.orders[op.produit].content['poids_kg']
+                time_spent = vehicle_obj.calculate_loading_time(quantity_kg)
             else:  # "Décharger"
                 self.simulation_orders.update_warehouse_content(warehouse, op.produit, op.quantite)
                 self.log_event(simulation_clock, vehicle, f"Déchargement de {op.quantite} de {op.produit} à {warehouse}")
                 state["current_load"] -= op.quantite * self.simulation_orders.orders[op.produit].content['poids_kg']
+                time_spent = vehicle_obj.calculate_unloading_time(quantity_kg)
 
     def run_simulation_with_time_step(self):
         """Exécute la simulation en avançant par pas de temps"""
@@ -218,7 +247,7 @@ class Simulation:
                                 next_step = state["current_route"].steps[0].entrepot
                                 vehicle_obj = next(v for v in st.session_state.fleet if v.nom == veh_nom)
                                 
-                                state["time_remaining"], cost, emission, distance = self.compute_segment_time(
+                                state["time_remaining"], cost, emission, distance = self.compute_segment_time_network(
                                     vehicle=vehicle_obj,
                                     start=vehicle_obj.storage_point,
                                     end=next_step,
@@ -249,7 +278,7 @@ class Simulation:
                             self.log_event(simulation_clock, veh_nom, f"Attente de chargement à {arrived_warehouse}")
                             state["time_remaining"] = datetime.timedelta(minutes=5)
                             continue
-
+                        
                         # Exécuter les opérations
                         self.process_step_operations(arrived_warehouse, veh_nom, current_step.operations, simulation_clock)
 
@@ -258,7 +287,7 @@ class Simulation:
                             next_warehouse = current_route.steps[state["current_step"]].entrepot
                             vehicle_obj = next(v for v in st.session_state.fleet if v.nom == veh_nom)
                             
-                            state["time_remaining"], cost, emission, distance = self.compute_segment_time(
+                            state["time_remaining"], cost, emission, distance = self.compute_segment_time_network(
                                 vehicle=vehicle_obj,
                                 start=arrived_warehouse,
                                 end=next_warehouse,

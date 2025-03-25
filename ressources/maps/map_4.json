@@ -1,0 +1,115 @@
+{
+    "ZONES": [
+      {
+        "nom": "Aire urbaine",
+        "coordonnees": [
+          [1.428909, 43.652224],
+          [1.449509, 43.645516],
+          [1.473198, 43.644771],
+          [1.477318, 43.635827],
+          [1.485558, 43.60451],
+          [1.493797, 43.59556],
+          [1.49929, 43.58064],
+          [1.493454, 43.555266],
+          [1.468048, 43.573675],
+          [1.456375, 43.570691],
+          [1.442299, 43.575914],
+          [1.419296, 43.567457],
+          [1.412773, 43.569447],
+          [1.39595, 43.598792],
+          [1.416893, 43.614454],
+          [1.422729, 43.651727],
+          [1.428909, 43.652224]
+        ],
+        "style": {
+          "fillColor": "Blue",
+          "color": "#000000",
+          "weight": 2,
+          "fillOpacity": 0.2,
+          "zIndex": 0
+        },
+        "description": "Limité à 50 kph - Pas de restriction Crit'Air - Pas de restriction d'horaire",
+        "parameters": {
+          "vitesse_maximale": 50,
+          "critair_min": 0
+        }
+      },
+      {
+        "nom": "Centre ville",
+        "coordonnees": [
+          [1.433716, 43.610477],
+          [1.441956, 43.611222],
+          [1.448479, 43.605256],
+          [1.452255, 43.59556],
+          [1.440239, 43.592576],
+          [1.432686, 43.592328],
+          [1.426506, 43.603516],
+          [1.427193, 43.609234],
+          [1.433716, 43.610477]
+        ],
+        "style": {
+          "fillColor": "LimeGreen",
+          "color": "DarkGreen",
+          "weight": 2,
+          "fillOpacity": 0.4,
+          "zIndex": 1
+        },
+        "description": "Limité à 30kph - Pas de Crit'Air - Pas d'horaires",
+        "parameters": {
+          "vitesse_maximale": 30,
+          "critair_min": 0
+        }
+      },
+      {
+        "nom": "Zone verte",
+        "coordonnees": [
+          [1.416721, 43.5371],
+          [1.415176, 43.526398],
+          [1.412086, 43.515194],
+          [1.420669, 43.514448],
+          [1.423244, 43.51868],
+          [1.426163, 43.535732],
+          [1.416721, 43.5371]
+        ],
+        "style": {
+          "fillColor": "Green",
+          "color": "#000000",
+          "weight": 2,
+          "fillOpacity": 0.5,
+          "zIndex": 2
+        },
+        "description": "Limité à 20kph - Pas de Crit'air - Pas d'horaires",
+        "parameters": {
+          "vitesse_maximale": 20,
+          "critair_min": 0
+        }
+      }
+    ],
+    "DELIVERY_POINTS": [
+      {
+        "nom": "Client N°1 - Intramarché",
+        "type": "delivery",
+        "coordonnees": [43.576433, 1.422729],
+        "description": "Magasin de grande surface"
+      },
+      {
+        "nom": "Client n°2 - Lareine Merlin",
+        "type": "delivery",
+        "coordonnees": [43.60103, 1.441269],
+        "description": "Magasin de bricolage"
+      },
+      {
+        "nom": "Client n°3 - Bricoloco",
+        "type": "delivery",
+        "coordonnees": [43.573675, 1.487274],
+        "description": "Magasin de bricolage"
+      },
+      {
+        "nom": "Start",
+        "type": "warehouse",
+        "coordonnees": [43.642458, 1.429596],
+        "description": "Entrepot de départ - Siège de l'entreprise"
+      }
+    ]
+  }
+  

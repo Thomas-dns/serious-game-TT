@@ -3,7 +3,7 @@ class Vehicle:
                  autonomie_charge_km, vitesse_max, impact_km_charge_co2,
                  impact_km_vide_co2, crit_air, cout_utilisation_km_charge,
                  cout_utilisation_km_vide, cout_fixe_utilisation_journalier,
-                 storage_point):
+                 storage_point, valid_roads = []):
         
         self.nom = nom
 
@@ -26,6 +26,8 @@ class Vehicle:
         
         self.content = {}
 
+        self.valid_roads = valid_roads
+        
     # Renvois le cout par kilomètre
     def travel_cost_km(self, load):
         # Calcul du coefficient de charge (entre 0 et 1)

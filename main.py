@@ -82,6 +82,68 @@ def show_main_page():
         st.session_state.round += 1
         st.rerun()
 
+    def add_route_test_to_main_view():
+        """
+        Version simplifiée : ajoute un petit outil de test d'itinéraire à la vue principale
+        """
+        import streamlit as st
+        from utils.travel import distance_network
+        
+        # Créer un expander pour ne pas prendre trop de place
+        with st.expander("Test de calcul d'itinéraire"):
+            # Récupérer la liste des noms d'entrepôts
+            warehouse_names = [w.nom for w in st.session_state.warehouses_info]
+            
+            # Créer les menus déroulants pour la sélection des entrepôts
+            col1, col2 = st.columns(2)
+            with col1:
+                start_warehouse = st.selectbox(
+                    "Départ",
+                    options=warehouse_names,
+                    index=0,
+                    key="route_start"
+                )
+            
+            with col2:
+                # Filtrer pour ne pas pouvoir sélectionner le même entrepôt
+                end_options = [w for w in warehouse_names if w != start_warehouse]
+                end_warehouse = st.selectbox(
+                    "Arrivée",
+                    options=end_options,
+                    index=0,
+                    key="route_end"
+                )
+            
+            # Fonction simple qui accepte toutes les routes
+            def valid_road(properties):
+                return True
+            
+            if st.button("Calculer"):
+                try:
+                    # Appel à la fonction distance_network
+                    result = distance_network(start_warehouse, end_warehouse, valid_road)
+                    
+                    if result is None:
+                        st.error(f"Aucun itinéraire trouvé entre {start_warehouse} et {end_warehouse}.")
+                    else:
+                        st.success(f"Itinéraire trouvé avec {len(result)} segments!")
+                        
+                        # Afficher simplement le nombre de segments et quelques propriétés
+                        total_distance = sum(segment['geometry'].length for segment in result) * 111000  # Conversion approx. degrés -> mètres
+                        st.write(f"Distance totale: {total_distance:.2f} mètres")
+                        
+                        # Afficher le premier et le dernier segment pour vérification
+                        if len(result) > 0:
+                            st.write("Premier segment:", result[0]['properties'].get('name', 'Sans nom'))
+                        if len(result) > 1:
+                            st.write("Dernier segment:", result[-1]['properties'].get('name', 'Sans nom'))
+                        
+                except Exception as e:
+                    st.error(f"Erreur: {str(e)}")
+    add_route_test_to_main_view()
+        
+            
+    
 def show_navigation():
     col1, col2, col3, col4= st.columns(4)
     

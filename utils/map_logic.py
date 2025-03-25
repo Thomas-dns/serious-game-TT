@@ -58,6 +58,56 @@ def create_map():
             attribution_control=True,
             #tiles=""  # Pour avoir un fond blanc
         )
+    
+    # Définir une fonction de style qui attribue une couleur en fonction du type de route
+    def road_style_function(feature):
+        """Retourne un style différent en fonction du type de route."""
+        highway_type = feature['properties'].get('highway', 'unknown')
+        
+        # Dictionnaire des couleurs par type de route
+        colors = {
+            'motorway': '#E990F9',         # violet
+            'trunk': '#F9C890',            # orange
+            'primary': '#F55142',          # rouge
+            'secondary': '#F3F349',        # jaune
+            'tertiary': '#559DF6',         # bleu clair
+            'residential': '#6DE373',      # vert
+            'service': '#BBBBBB',          # gris
+            'footway': '#FFFFA0',          # jaune pâle
+            'cycleway': '#9575CD',         # violet clair
+            'path': '#00C853',             # vert foncé
+            'unknown': '#808080'           # gris pour type inconnu
+        }
+        
+        # Dictionnaire des largeurs par type de route
+        weights = {
+            'motorway': 5,
+            'trunk': 4,
+            'primary': 3,
+            'secondary': 3,
+            'tertiary': 2.5,
+            'residential': 2,
+            'service': 1.5,
+            'footway': 1,
+            'cycleway': 1,
+            'path': 1,
+            'unknown': 1
+        }
+        
+        return {
+            'color': colors.get(highway_type, colors['unknown']),
+            'weight': weights.get(highway_type, weights['unknown']),
+            'opacity': 0.7
+        }
+    
+    with open("ressources/maps/toulouse_road_filtered.geojson", "r") as f:
+        geojson_data = json.load(f)
+
+    folium.GeoJson(
+        geojson_data,
+        name="Routes",
+        style_function=road_style_function
+        ).add_to(m)
 
     # Ajouter les zones
     def creer_zone(coordonnes, nom):
