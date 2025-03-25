@@ -73,7 +73,9 @@ def show_main_page():
     transport_view()
 
     show_orders_page()
-    # Simple bouton de reset
+
+    st.subheader("Interface de développement")   
+    st.write("Cette section est destinée à l'interface de développement. / Elle permet de changer de round et de reset avant que le changement de round ne soit implémenté.")
     if st.button("Reset Round"):
         st.session_state.round = 1
         st.rerun()
