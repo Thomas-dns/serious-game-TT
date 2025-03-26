@@ -325,18 +325,79 @@ class Network:
             print(f"Erreur lors du calcul du chemin: {str(e)}")
             return None
 
-# Example Usage
+
+import matplotlib.pyplot as plt
+import contextily as ctx
+
+import pyproj
+
+def plot_route(self, path_details, output_file='route.jpg'):
+    """
+    Génère une image JPG du trajet sur la carte
+    
+    Args:
+        path_details (dict): Résultat de calculate_detailed_path
+        output_file (str): Nom du fichier de sortie
+    """
+    if not self.graph:
+        print("Erreur: Aucun graphe construit.")
+        return
+
+    # Créer un transformateur de coordonnées
+    transformer = pyproj.Transformer.from_crs(
+        'EPSG:4326',  # WGS84 (lon/lat)
+        'EPSG:3857',  # Web Mercator
+        always_xy=True
+    )
+
+    fig, ax = plt.subplots(figsize=(12, 12))
+    
+    # Tracer toutes les routes du réseau
+    for u, v in self.graph.edges():
+        # Conversion des coordonnées en Web Mercator
+        x1, y1 = transformer.transform(u[0], u[1])
+        x2, y2 = transformer.transform(v[0], v[1])
+        ax.plot([x1, x2], [y1, y2], color='grey', linewidth=0.3, alpha=0.5, zorder=1)
+
+    # Tracer le trajet trouvé
+    if path_details:
+        path = path_details['nodes']
+        for i in range(len(path) - 1):
+            lon1, lat1 = path[i]
+            lon2, lat2 = path[i+1]
+            x1, y1 = transformer.transform(lon1, lat1)
+            x2, y2 = transformer.transform(lon2, lat2)
+            ax.plot([x1, x2], [y1, y2], color='red', linewidth=2, zorder=2)
+
+        # Points de départ et d'arrivée
+        start = path[0]
+        end = path[-1]
+        xs, ys = transformer.transform(start[0], start[1])
+        xe, ye = transformer.transform(end[0], end[1])
+        ax.scatter([xs], [ys], color='lime', s=100, label='Départ', zorder=3)
+        ax.scatter([xe], [ye], color='blue', s=100, label='Arrivée', zorder=3)
+
+    # Ajout de la carte OpenStreetMap
+    ctx.add_basemap(ax, crs='EPSG:3857', source=ctx.providers.OpenStreetMap.Mapnik)
+    
+    ax.set_axis_off()
+    plt.legend()
+    plt.savefig(output_file, dpi=300, bbox_inches='tight')
+    plt.close()
+    # Ajouter la méthode à la classe Network
+Network.plot_route = plot_route
+
+# Exemple d'utilisation
 if __name__ == "__main__":
     network = Network(allowed_highway_types=['motorway', 'trunk', 'primary', 'secondary', 'tertiary', 'residential', 'service'])
     network.load_geojson('ressources/maps/toulouse_road_filtered.geojson')
     network.build_graph()
 
-    start_point = [1.4437, 43.6043]
-    end_point = [1.4603, 43.6122]
-    path = network.calculate_detailed_path(start_point, end_point, weight='distance')
-    print(len(path))
+    start_point = [1.4437, 43.6043]  # Capitole
+    end_point = [1.4603, 43.6122]    # Oncopole
+    
+    path = network.calculate_detailed_path(start_point, end_point)
+    
     if path:
-        print(f"Total distance: {path['total_distance']:.2f} km")
-        print(f"Total time: {path['total_time']:.2f} minutes")
-        print(f"Number of segments: {path['num_segments']}")
-        print(f"First segment: {path['segments'][0]}")
+        network.plot_route(path, 'mon_trajet.jpg')
+        print("Carte générée avec succès dans mon_trajet.jpg")
